@@ -17,7 +17,7 @@ class CompanyController extends Controller
 
         Company::create($validated);
 
-        return redirect('/company');
+        return redirect('/company')->with('message', 'successfully created');
     }
 
     public function storeId($id)
@@ -36,13 +36,13 @@ class CompanyController extends Controller
 
         $company->update($validated);
 
-        return redirect('/company');
+        return redirect('/company')->with('message_update', 'Update successfully');
     }
 
     public function destroy(Request $request, Company $company)
     {
         $company->delete();
 
-        return redirect('/company');
+        return redirect('/company')->with('message_delete', 'Successfully Deleted');
     }
 }

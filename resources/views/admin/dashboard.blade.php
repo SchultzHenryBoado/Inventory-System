@@ -81,7 +81,7 @@
                     <a href="/company" class="nav-link text-dark">Company Profile</a>
                   </li>
                   <li class="nav-item">
-                    <a href="/stock_profiles" class="nav-link text-dark">Stock Profile</a>
+                    <a href="/stock" class="nav-link text-dark">Stock Profile</a>
                   </li>
                 </ul>
               </div>

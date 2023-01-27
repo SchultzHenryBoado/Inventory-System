@@ -81,7 +81,7 @@
                     <a href="/company" class="nav-link text-dark">Company Profile</a>
                   </li>
                   <li class="nav-item">
-                    <a href="/stock_profiles" class="nav-link text-dark">Stock Profile</a>
+                    <a href="/stock" class="nav-link text-dark">Stock Profile</a>
                   </li>
                 </ul>
               </div>
@@ -94,6 +94,19 @@
 
   <!-- User form -->
   <div class="container mt-5">
+
+    @if(session()->has('message'))
+    <div class="alert alert-success">
+      <p>{{session('message')}}</p>
+    </div>
+    @endif
+
+    @if(session()->has('message_update'))
+    <div class="alert alert-warning">
+      <p>{{session('message_update')}}</p>
+    </div>
+    @endif
+
     <div class="mb-3">
       <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createUsers">
         Add Users
@@ -113,6 +126,11 @@
                   <div class="form-floating mb-3">
                     <input type="text" name="last_name" id="lastName" class="form-control" placeholder="Lastname">
                     <label for="lastName">Enter a surname</label>
+                    @error('last_name')
+                    <p class="text-danger">
+                      {{$message}}
+                    </p>
+                    @enderror
                   </div>
                 </div>
                 <div class="col-12">
@@ -120,6 +138,11 @@
                   <div class="form-floating mb-3">
                     <input type="text" name="first_name" id="firstName" class="form-control" placeholder="Firstname">
                     <label for="firstName">Enter a firstname</label>
+                    @error('first_name')
+                    <p class="text-danger">
+                      {{$message}}
+                    </p>
+                    @enderror
                   </div>
                 </div>
                 <div class="col-12">
@@ -127,6 +150,11 @@
                   <div class="form-floating mb-3">
                     <input type="text" name="email" id="email" class="form-control" placeholder="Email">
                     <label for="email">Enter an email</label>
+                    @error('email')
+                    <p class="text-danger">
+                      {{$message}}
+                    </p>
+                    @enderror
                   </div>
                 </div>
                 <div class="col-12">
@@ -134,6 +162,11 @@
                   <div class="form-floating mb-3">
                     <input type="password" name="password" id="password" class="form-control" placeholder="Password">
                     <label for="password">Password</label>
+                    @error('password')
+                    <p class="text-danger">
+                      {{$message}}
+                    </p>
+                    @enderror
                   </div>
                 </div>
                 <div class="col-12">
@@ -141,6 +174,11 @@
                   <div class="form-floating mb-3">
                     <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Password">
                     <label for="password_confirmation">Confirm password</label>
+                    @error('password_confirmation')
+                    <p class="text-danger">
+                      {{$message}}
+                    </p>
+                    @enderror
                   </div>
                 </div>
                 <div class="col-12">
@@ -151,6 +189,7 @@
                       <option value="Admin">Admin</option>
                     </select>
                     <label for="accountRoles">Choose an account type</label>
+
                   </div>
                 </div>
                 <div class="col-12">
@@ -196,7 +235,74 @@
             <td>{{ $users->password }}</td>
             <td>{{ $users->account_role }}</td>
             <td>{{ $users->account_status }}</td>
-            <td></td>
+            <td>
+              <button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#updateUserModal-{{ $users->id }}">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+
+              <form action="/user/{{ $users->id }}" method="post">
+                @csrf
+                @method('put')
+                <div class="modal fade" id="updateUserModal-{{ $users->id }}" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Update a User</h5>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="mb-3 form-floating">
+                              <input type="text" name="last_name" id="updateLastName" class="form-control" placeholder="Lastname" value="{{ $users->last_name }}">
+                              <label for="updateLastName">Enter your lastname</label>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="mb-3 form-floating">
+                              <input type="text" name="first_name" id="updateFirstName" class="form-control" placeholder="Firstname" value="{{ $users->first_name }}">
+                              <label for="updateFirstName">Enter your firstname</label>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="mb-3 form-floating">
+                              <input type="email" name="email" id="updateEmail" class="form-control" placeholder="Email" value="{{ $users->email }}">
+                              <label for="updateEmail">Enter your firstname</label>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="mb-3 form-floating">
+                              <input type="password" name="password" id="updatePassword" class="form-control" placeholder="Password" value="{{ $users->password }}">
+                              <label for="updatePassword">Enter your firstname</label>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="mb-3 form-floating">
+                              <select name="account_role" id="updateAccountRole" class="form-select">
+                                <option value="User">User</option>
+                                <option value="Admin">Admin</option>
+                              </select>
+                              <label for="updateAccountRole">Account Role</label>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="mb-3 form-floating">
+                              <select name="account_status" id="updateStatus" class="form-select">
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                              </select>
+                              <label for="updateStatus">Account Status</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-success fw-bold">Update</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </td>
           </tr>
           @endforeach
         </tbody>

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ReceivingController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,22 +17,51 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(UserController::class)->group(function () {
-    Route::get('/login', 'index')->name('login')->middleware('guest');
-    Route::get('/dashboard', 'dashboard')->middleware('auth');
-    Route::get('/user', 'user');
-    Route::get('/company', 'company');
-    Route::get('/stock_profiles', 'stock_profile');
-
-    Route::post('/user/store', 'store');
-    Route::post('/login/process', 'process');
-    Route::get('/logout', 'logout');
+Route::get('/', function () {
+    return view('welcome');
 });
 
-Route::controller(CompanyController::class)->group(function () {
-    Route::get('/company/{company}', 'storeId');
+Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
 
-    Route::post('/company/store', 'store');
-    Route::put('/company/{company}', 'update');
-    Route::delete('/company/{company}', 'destroy');
+// Users
+Route::middleware(['auth', 'user_role:user'])->group(function () {
+    Route::controller(ReceivingController::class)->group(function () {
+        Route::get('/receiving', 'show')->name('home');
+    });
 });
+
+// Admin
+Route::middleware(['auth', 'user_role:admin'])->group(function () {
+
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/dashboard', 'dashboard')->name('home')->middleware('auth');
+    });
+});
+
+// Route::controller(UserController::class)->group(function () {
+//     Route::get('/user', 'user');
+//     Route::get('/company', 'company');
+//     Route::get('/stock', 'stock');
+
+
+//     Route::post('/user/store', 'store');
+//     Route::post('/login/process', 'process');
+//     Route::get('/logout', 'logout');
+//     Route::put('/user/{user}', 'updateUser');
+// });
+
+// Route::controller(CompanyController::class)->group(function () {
+//     Route::get('/company/{company}', 'storeId');
+
+//     Route::post('/company/store', 'store');
+//     Route::put('/company/{company}', 'update');
+//     Route::delete('/company/{company}', 'destroy');
+// });
+
+// Route::controller(StockController::class)->group(function () {
+//     Route::get('/stock/{stock}', 'show');
+
+//     Route::post('/stock/store', 'store');
+//     Route::put('/stock/{stock}', 'update');
+//     Route::delete('/stock/{stock}', 'destroy');
+// });

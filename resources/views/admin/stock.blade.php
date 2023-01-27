@@ -9,14 +9,15 @@
 
   <!-- CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 
   <!-- JS -->
-  <!-- <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script> -->
+  <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
   </script>
   <script src="https://kit.fontawesome.com/8cbc2e0f0e.js" crossorigin="anonymous"></script>
-  <!-- <script src="./js/tables.js" defer></script>
-  <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" defer></script> -->
+  <script src="{{ url('js/dataTable.js') }}" defer></script>
+  <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" defer></script>
 </head>
 
 <body>
@@ -80,7 +81,7 @@
                     <a href="/company" class="nav-link text-dark">Company Profile</a>
                   </li>
                   <li class="nav-item">
-                    <a href="/stock_profiles" class="nav-link text-dark">Stock Profile</a>
+                    <a href="/stock" class="nav-link text-dark">Stock Profile</a>
                   </li>
                 </ul>
               </div>
@@ -93,13 +94,33 @@
 
   <!-- User form -->
   <div class="container mt-5">
+
+    @if(session()->has('message'))
+    <div class="alert alert-success">
+      <p>{{session('message')}}</p>
+    </div>
+    @endif
+
+    @if(session()->has('message_update'))
+    <div class="alert alert-warning">
+      <p>{{session('message_update')}}</p>
+    </div>
+    @endif
+
+    @if(session()->has('message_delete'))
+    <div class="alert alert-danger">
+      <p>{{session('message_delete')}}</p>
+    </div>
+    @endif
+
     <div class="mb-3">
       <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createCompany">
         Add Stocks
       </button>
     </div>
 
-    <form action="./php/stocks_create.php" method="post" class="needs-validation" novalidate>
+    <form action="/stock/store" method="post">
+      @csrf
       <div class="modal fade" id="createCompany" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -110,44 +131,52 @@
               <div class="col-12">
                 <!-- stock code -->
                 <div class="form-floating mb-3">
-                  <input type="text" name="stock_code" id="stockCode" class="form-control" placeholder="Stock Code" required>
+                  <input type="text" name="stock_code" id="stockCode" class="form-control" placeholder="Stock Code">
                   <label for="stockCode">Input a stock code</label>
-                  <div class="invalid-feedback">
-                    Please fill-up the stock code.
-                  </div>
+                  @error('stock_code')
+                  <p class="text-danger">
+                    {{$message}}
+                  </p>
+                  @enderror
                 </div>
               </div>
               <div class="col-12">
                 <!-- description -->
                 <div class="form-floating mb-3">
-                  <input type="text" name="description" id="description" class="form-control" placeholder="Description" required>
+                  <input type="text" name="description" id="description" class="form-control" placeholder="Description">
                   <label for="description">Input a description</label>
-                  <div class="invalid-feedback">
-                    Please fill-up the description.
-                  </div>
+                  @error('description')
+                  <p class="text-danger">
+                    {{$message}}
+                  </p>
+                  @enderror
                 </div>
               </div>
               <div class="col-12">
                 <!-- uom -->
                 <div class="form-floating mb-3">
-                  <input type="text" name="uom" id="uom" class="form-control" placeholder="Uom" required>
+                  <input type="text" name="uom" id="uom" class="form-control" placeholder="Uom">
                   <label for="uom">Input an UOM</label>
-                  <div class="invalid-feedback">
-                    Please fill-up the UOM.
-                  </div>
+                  @error('uom')
+                  <p class="text-danger">
+                    {{$message}}
+                  </p>
+                  @enderror
                 </div>
               </div>
               <div class="col-12">
                 <!-- status -->
                 <div class="form-floating mb-3">
-                  <select name="statuses" id="status" class="form-select">
+                  <select name="account_status" id="status" class="form-select">
                     <option value="ACTIVE">ACTIVE</option>
                     <option value="INACTIVE">INACTIVE</option>
                   </select>
                   <label for="status">Status</label>
-                  <div class="invalid-feedback">
-                    Please fill-up the status.
-                  </div>
+                  @error('account_status')
+                  <p class="text-danger">
+                    {{$message}}
+                  </p>
+                  @enderror
                 </div>
               </div>
               <div class="modal-footer">
@@ -161,17 +190,104 @@
     </form>
 
     <div class="table-responsive">
-      <table class="table table-striped table-hover " id="dataTable" style="width: 100%;">
+      <table class="table table-striped table-hover " id="myTable" style="width: 100%;">
         <thead class="table-success">
           <tr>
             <th>Stock Code</th>
             <th>Description</th>
             <th>UOM</th>
             <th>Status</th>
-            <th></th>
-            <th></th>
+            <th>Actions</th>
           </tr>
         </thead>
+        <tbody>
+          @foreach($stocks as $stock)
+          <tr>
+            <td>{{ $stock->stock_code }}</td>
+            <td>{{ $stock->description }}</td>
+            <td>{{ $stock->uom }}</td>
+            <td>{{ $stock->account_status }}</td>
+            <td>
+              <div class="d-inline-block">
+                <button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#editModal-{{ $stock->id }}">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+
+                <form action="/stock/{{ $stock->id }}" method="post">
+                  @method('put')
+                  @csrf
+                  <div class="modal fade" id="editModal-{{ $stock->id }}" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Update Stocks</h5>
+                        </div>
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="mb-3 form-floating">
+                                <input type="text" name="stock_code" id="updateStockCode" class="form-control" placeholder="Stock" value="{{ $stock->stock_code }}">
+                                <label for="updateStockCode">Stock Code</label>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="mb-3 form-floating">
+                                <input type="text" name="description" id="updateDescription" class="form-control" placeholder="Description" value="{{ $stock->description }}">
+                                <label for="updateDescription">Description</label>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="mb-3 form-floating">
+                                <input type="text" name="uom" id="updateUom" class="form-control" placeholder="UOM" value="{{ $stock->uom }}">
+                                <label for="updateUom">UOM</label>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="mb-3 form-floating">
+                                <select name="account_status" id="updateAccountStatus" class="form-select">
+                                  <option value="ACTIVE">ACTIVE</option>
+                                  <option value="INACTIVE">INACTIVE</option>
+                                </select>
+                                <label for="updateAccountStatus">Status</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-success fw-bold">Update</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <div class="d-inline-block">
+                <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $stock->id }}">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+
+                <form action="/stock/{{ $stock->id }}" method="post">
+                  @method('delete')
+                  @csrf
+                  <div class="modal fade" id="deleteModal-{{ $stock->id }}" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Are you sure you want to delete?</h5>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-danger fw-bold">Delete</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </td>
+          </tr>
+          @endforeach
+        </tbody>
       </table>
     </div>
   </div>

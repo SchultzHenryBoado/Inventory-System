@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Stock;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -34,10 +34,13 @@ class UserController extends Controller
         return view('admin.company', ['company' => $dataCompany]);
     }
 
-    public function stock_profile()
+    public function stock()
     {
-        return view('admin.stock');
+        $data = Stock::all();
+
+        return view('admin.stock', ['stocks' => $data]);
     }
+
 
     public function store(Request $request)
     {
@@ -51,12 +54,11 @@ class UserController extends Controller
 
         ]);
 
-
         $validated['password'] = bcrypt($validated['password']);
 
         User::create($validated);
 
-        return redirect('/user');
+        return redirect('/user')->with('message', 'Created Successfully');
     }
 
     public function process(Request $request)
@@ -68,9 +70,15 @@ class UserController extends Controller
         ]);
 
         if (auth()->attempt($validated)) {
-            $request->session()->regenerate();
 
-            return redirect('/dashboard');
+            if (auth()->user()->role == 'admin') {
+                return redirect('/admin.dashboard');
+            } else {
+                return redirect('/user.receiving');
+            }
+            // $request->session()->regenerate();
+
+            // return redirect('/dashboard');
         }
     }
 
@@ -82,5 +90,21 @@ class UserController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/login');
+    }
+
+    public function updateUser(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'last_name' => ['required'],
+            'first_name' => ['required'],
+            'email' => ['required'],
+            'password' => ['required'],
+            'account_role' => ['required'],
+            'account_status' => ['required']
+        ]);
+
+        $user->update($validated);
+
+        return redirect('/user')->with('message_update', 'Updated Successfully');
     }
 }

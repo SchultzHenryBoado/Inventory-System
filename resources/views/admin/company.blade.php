@@ -36,13 +36,13 @@
         </button>
         <ul class="dropdown-menu dropdown-menu-sm-end">
           <li class="nav-item text-center">
-            <a class="dropdown-item" href="./change_password.php">Change Password</a>
+            <a class="dropdown-item" href="#">Change Password</a>
           </li>
           <li>
             <hr class="dropdown-divider">
           </li>
           <li class="nav-item text-center">
-            <a class="dropdown-item" href="./php/logout.php">Logout</a>
+            <a class="dropdown-item" href="{{ url('/logout') }}">Logout</a>
           </li>
         </ul>
       </div>
@@ -83,7 +83,7 @@
                     <a href="/company" class="nav-link text-dark">Company Profile</a>
                   </li>
                   <li class="nav-item">
-                    <a href="/stock_profiles" class="nav-link text-dark">Stock Profile</a>
+                    <a href="/stock" class="nav-link text-dark">Stock Profile</a>
                   </li>
                 </ul>
               </div>
@@ -97,6 +97,24 @@
   <!-- User form -->
 
   <div class="container mt-5">
+    @if(session()->has('message'))
+    <div class="alert alert-success">
+      <p>{{session('message')}}</p>
+    </div>
+    @endif
+
+    @if(session()->has('message_update'))
+    <div class="alert alert-warning">
+      <p>{{session('message_update')}}</p>
+    </div>
+    @endif
+
+    @if(session()->has('message_delete'))
+    <div class="alert alert-danger">
+      <p>{{session('message_delete')}}</p>
+    </div>
+    @endif
+
     <div class="mb-3">
       <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createCompany">
         Add Company
@@ -117,6 +135,11 @@
                 <div class="form-floating mb-3">
                   <input type="text" name="company_code" id="companyCode" class="form-control" placeholder="Company Code">
                   <label for="companyCode">Input a company code</label>
+                  @error('company_code')
+                  <p class="text-danger">
+                    {{$message}}
+                  </p>
+                  @enderror
                 </div>
               </div>
               <div class="col-12">
@@ -124,6 +147,11 @@
                 <div class="form-floating mb-3">
                   <input type="text" name="company_name" id="companyName" class="form-control" placeholder="Company Name">
                   <label for="companyName">Input a company name</label>
+                  @error('company_name')
+                  <p class="text-danger">
+                    {{$message}}
+                  </p>
+                  @enderror
                 </div>
               </div>
               <div class="modal-footer">
@@ -154,7 +182,7 @@
             <td>
               <div class="d-inline-block">
                 <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateCompanyModal-{{ $companies->id }}">
-                  <i class="fa-solid fa-pen"></i>
+                  <i class="fa-solid fa-pen-to-square"></i>
                 </button>
 
                 <form action="/company/{{ $companies->id }}" method="post">
@@ -178,6 +206,9 @@
                               <div class="mb-3 form-floating">
                                 <input type="text" name="company_name" id="companyName" class="form-control" placeholder="Company Name" value="{{ $companies->company_name }}">
                                 <label for="companyName">Company Name</label>
+                                @error ('company_name')
+                                <p class="text-red">{{$message}}</p>
+                                @enderror
                               </div>
                             </div>
                           </div>
