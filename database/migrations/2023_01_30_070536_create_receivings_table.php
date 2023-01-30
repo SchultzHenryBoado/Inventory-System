@@ -13,8 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->tinyInteger('role')->default(0);
+        Schema::create('receivings', function (Blueprint $table) {
+            $table->id();
+            $table->string('receiving_no');
+            $table->string('warehouse');
+            $table->date('date');
+            $table->string('po_number');
+            $table->string('description');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('account_role');
-        });
+        Schema::dropIfExists('receivings');
     }
 };

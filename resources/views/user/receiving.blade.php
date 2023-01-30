@@ -91,10 +91,30 @@
   <div class="container-fluid mt-5">
     <div class="container">
 
+      @if(session()->has('message_update'))
+      <div class="alert alert-warning">
+        <p>{{session('message')}}</p>
+      </div>
+      @endif
+
+      @if(session()->has('message_delete'))
+      <div class="alert alert-danger">
+        <p>{{session('message')}}</p>
+      </div>
+      @endif
+
+      @if(session()->has('message'))
+      <div class="alert alert-success">
+        <p>{{session('message')}}</p>
+      </div>
+      @endif
+
+
       <div class="mb-3 d-inline-block">
         <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#addReceiving">Add Receiving</button>
 
-        <form action="#" method="post" class="needs-validation" novalidate>
+        <form action="/receiving/store" method="post">
+          @csrf
           <div class="modal fade" id="addReceiving" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
@@ -105,50 +125,60 @@
                   <div class="row">
                     <div class="col-12">
                       <div class="mb-3 form-floating">
-                        <input type="text" name="receiving_no" id="receivingNo" class="form-control" placeholder="Receiving No" required>
+                        <input type="text" name="receiving_no" id="receivingNo" class="form-control" placeholder="Receiving No">
                         <label for="receivingNo">Receiving No</label>
-                        <div class="invalid-feedback">
-                          Please fill-up the receiving no.
-                        </div>
+                        @error('receiving_no')
+                        <span class="text-danger">
+                          {{$message}}
+                        </span>
+                        @enderror
                       </div>
                     </div>
                     <div class="col-12">
                       <div class="mb-3 form-floating">
-                        <select name="warehouse" id="warehouse" class="form-control" required>
+                        <select name="warehouse" id="warehouse" class="form-control">
                           <option disabled selected value>-- Choose a warehouse --</option>
                           <option value="warehouse">warehouse</option>
                         </select>
                         <label for="warehouse">Warehouse</label>
-                        <div class="invalid-feedback">
-                          Please choose in warehouse.
-                        </div>
+                        @error('warehouse')
+                        <span class="text-danger">
+                          {{$message}}
+                        </span>
+                        @enderror
                       </div>
                     </div>
                     <div class="col-12">
                       <div class="mb-3 form-floating">
-                        <input type="date" name="date" id="date" class="form-control" required>
+                        <input type="date" name="date" id="date" class="form-control">
                         <label for="date">Date</label>
-                        <div class="invalid-feedback">
-                          Please fill-up the date.
-                        </div>
+                        @error('date')
+                        <span class="text-danger">
+                          {{$message}}
+                        </span>
+                        @enderror
                       </div>
                     </div>
                     <div class="col-12">
                       <div class="mb-3 form-floating">
-                        <input type="text" name="po_number" id="poNum" class="form-control" placeholder="P.O. Number" required>
+                        <input type="text" name="po_number" id="poNum" class="form-control" placeholder="P.O. Number">
                         <label for="poNum">P.O. Number</label>
-                        <div class="invalid-feedback">
-                          Please fill-up the P.O. number.
-                        </div>
+                        @error('po_number')
+                        <span class="text-danger">
+                          {{$message}}
+                        </span>
+                        @enderror
                       </div>
                     </div>
                     <div class="col-12">
                       <div class="mb-3 form-floating">
-                        <input type="text" name="description" id="description" class="form-control" placeholder="Description" required>
+                        <input type="text" name="description" id="description" class="form-control" placeholder="Description">
                         <label for="description">Description</label>
-                        <div class="invalid-feedback">
-                          Please fill-up the description.
-                        </div>
+                        @error('description')
+                        <span class="text-danger">
+                          {{$message}}
+                        </span>
+                        @enderror
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -173,7 +203,7 @@
 
 
       <div class="table-responsive mt-3">
-        <table class="table" id="dataTable" style="width: 100%;">
+        <table class="table" id="myTable" style="width: 100%;">
           <thead>
             <tr>
               <th>Receiving No.</th>
@@ -185,7 +215,97 @@
             </tr>
           </thead>
           <tbody>
+            @foreach($receive as $receives)
+            <tr>
+              <td>{{ $receives->receiving_no }}</td>
+              <td>{{ $receives->warehouse }}</td>
+              <td>{{ $receives->date }}</td>
+              <td>{{ $receives->po_number }}</td>
+              <td>{{ $receives->description }}</td>
+              <td>
+                <div class="d-inline-block">
 
+
+                  <button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#editReceiveModal-{{ $receives->id }}">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </button>
+
+                  <form action="/receiving/{{ $receives->id }}" method="post">
+                    @csrf
+                    @method('put')
+                    <div class="modal fade" id="editReceiveModal-{{ $receives->id }}" tabindex="-1">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Update Receiving</h5>
+                          </div>
+                          <div class="modal-body">
+                            <div class="row">
+                              <div class="col-12">
+                                <div class="mb-3 form-floating">
+                                  <input type="text" name="receiving_no" id="updateReceiveNo" class="form-control" placeholder="Receive No" value="{{ $receives->receiving_no }}">
+                                  <label for="updateReceiveNo">Enter receive no.</label>
+                                  @error('receiving_no')
+                                  <span class="text-danger">
+                                    {{$message}}
+                                  </span>
+                                  @enderror
+                                </div>
+                              </div>
+                              <div class="col-12">
+                                <div class="mb-3 form-floating">
+                                  <select name="warehouse" id="updateWarehouse" class="form-select">
+                                    <option value="Warehouse">Warehouse</option>
+                                  </select>
+                                  <label for="updateWarehouse">Choose a warehouse</label>
+                                </div>
+                              </div>
+                              <div class="col-12">
+                                <div class="mb-3 form-floating">
+                                  <input type="date" name="date" id="updateDate" class="form-control" value="{{ $receives->date }}">
+                                  <label for="updateDate">Pick a date</label>
+                                  @error('date')
+                                  <span class="text-danger">
+                                    {{$message}}
+                                  </span>
+                                  @enderror
+                                </div>
+                              </div>
+                              <div class="col-12">
+                                <div class="mb-3 form-floating">
+                                  <input type="text" name="po_number" id="updatePoNumber" class="form-control" placeholder="PO Number" value="{{ $receives->po_number }}">
+                                  <label for="updatePoNumber">Enter po no.</label>
+                                  @error('po_number')
+                                  <span class="text-danger">
+                                    {{$message}}
+                                  </span>
+                                  @enderror
+                                </div>
+                              </div>
+                              <div class="col-12">
+                                <div class="mb-3 form-floating">
+                                  <input type="text" name="description" id="updateDescription" class="form-control" placeholder="Description" value="{{ $receives->description }}">
+                                  <label for="updateDescription">Description.</label>
+                                  @error('description')
+                                  <span class="text-danger">
+                                    {{$message}}
+                                  </span>
+                                  @enderror
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="submit" class="btn btn-success fw-bold">Update</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            @endforeach
           </tbody>
         </table>
       </div>

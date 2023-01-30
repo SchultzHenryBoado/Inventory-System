@@ -39,9 +39,9 @@
                   <input type="email" name="email" id="email" class="form-control" placeholder="Email address" />
                   <label class="form-label" for="email">Email address</label>
                   @error('email')
-                  <p class="text-danger">
+                  <span class="text-danger">
                     {{$message}}
-                  </p>
+                  </span>
                   @enderror
                 </div>
 
@@ -49,6 +49,11 @@
                 <div class="form-floating mb-4">
                   <input type="password" name="password" id="password" class="form-control" placeholder="Password" />
                   <label class="form-label" for="password">Password</label>
+                  @error('password')
+                  <span class="text-danger">
+                    {{$message}}
+                  </span>
+                  @enderror
                 </div>
 
                 <!-- Submit button -->

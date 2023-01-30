@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Receiving;
 use App\Models\Stock;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -41,6 +42,12 @@ class UserController extends Controller
         return view('admin.stock', ['stocks' => $data]);
     }
 
+    public function receive()
+    {
+        $data = Receiving::all();
+
+        return view('user.receiving', ['receive' => $data]);
+    }
 
     public function store(Request $request)
     {
@@ -70,15 +77,9 @@ class UserController extends Controller
         ]);
 
         if (auth()->attempt($validated)) {
+            $request->session()->regenerate();
 
-            if (auth()->user()->role == 'admin') {
-                return redirect('/admin.dashboard');
-            } else {
-                return redirect('/user.receiving');
-            }
-            // $request->session()->regenerate();
-
-            // return redirect('/dashboard');
+            return redirect('/home');
         }
     }
 

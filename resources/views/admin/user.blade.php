@@ -127,9 +127,9 @@
                     <input type="text" name="last_name" id="lastName" class="form-control" placeholder="Lastname">
                     <label for="lastName">Enter a surname</label>
                     @error('last_name')
-                    <p class="text-danger">
+                    <span class="text-danger">
                       {{$message}}
-                    </p>
+                    </span>
                     @enderror
                   </div>
                 </div>
@@ -139,9 +139,9 @@
                     <input type="text" name="first_name" id="firstName" class="form-control" placeholder="Firstname">
                     <label for="firstName">Enter a firstname</label>
                     @error('first_name')
-                    <p class="text-danger">
+                    <span class="text-danger">
                       {{$message}}
-                    </p>
+                    </span>
                     @enderror
                   </div>
                 </div>
@@ -151,9 +151,9 @@
                     <input type="text" name="email" id="email" class="form-control" placeholder="Email">
                     <label for="email">Enter an email</label>
                     @error('email')
-                    <p class="text-danger">
+                    <span class="text-danger">
                       {{$message}}
-                    </p>
+                    </span>
                     @enderror
                   </div>
                 </div>
@@ -163,9 +163,9 @@
                     <input type="password" name="password" id="password" class="form-control" placeholder="Password">
                     <label for="password">Password</label>
                     @error('password')
-                    <p class="text-danger">
+                    <span class="text-danger">
                       {{$message}}
-                    </p>
+                    </span>
                     @enderror
                   </div>
                 </div>
@@ -175,9 +175,9 @@
                     <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Password">
                     <label for="password_confirmation">Confirm password</label>
                     @error('password_confirmation')
-                    <p class="text-danger">
+                    <span class="text-danger">
                       {{$message}}
-                    </p>
+                    </span>
                     @enderror
                   </div>
                 </div>
@@ -255,24 +255,44 @@
                             <div class="mb-3 form-floating">
                               <input type="text" name="last_name" id="updateLastName" class="form-control" placeholder="Lastname" value="{{ $users->last_name }}">
                               <label for="updateLastName">Enter your lastname</label>
+                              @error('last_name')
+                              <span class="text-danger">
+                                {{$message}}
+                              </span>
+                              @enderror
                             </div>
                           </div>
                           <div class="col-12">
                             <div class="mb-3 form-floating">
                               <input type="text" name="first_name" id="updateFirstName" class="form-control" placeholder="Firstname" value="{{ $users->first_name }}">
                               <label for="updateFirstName">Enter your firstname</label>
+                              @error('first_name')
+                              <span class="text-danger">
+                                {{$message}}
+                              </span>
+                              @enderror
                             </div>
                           </div>
                           <div class="col-12">
                             <div class="mb-3 form-floating">
                               <input type="email" name="email" id="updateEmail" class="form-control" placeholder="Email" value="{{ $users->email }}">
-                              <label for="updateEmail">Enter your firstname</label>
+                              <label for="updateEmail">Enter your email</label>
+                              @error('email')
+                              <span class="text-danger">
+                                {{$message}}
+                              </span>
+                              @enderror
                             </div>
                           </div>
                           <div class="col-12">
                             <div class="mb-3 form-floating">
                               <input type="password" name="password" id="updatePassword" class="form-control" placeholder="Password" value="{{ $users->password }}">
-                              <label for="updatePassword">Enter your firstname</label>
+                              <label for="updatePassword">Enter your password</label>
+                              @error('password')
+                              <span class="text-danger">
+                                {{$message}}
+                              </span>
+                              @enderror
                             </div>
                           </div>
                           <div class="col-12">
