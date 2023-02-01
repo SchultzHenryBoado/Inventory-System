@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TransferInExport;
 use App\Models\TransferIn;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TransferInController extends Controller
 {
@@ -49,5 +51,10 @@ class TransferInController extends Controller
         $transferIn->delete();
 
         return redirect('/transfer_in')->with('message_delete', 'Successfully Deleted');
+    }
+
+    public function export_excel()
+    {
+        return Excel::download(new TransferInExport, 'Transfer_in.xlsx');
     }
 }

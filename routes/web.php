@@ -54,7 +54,9 @@ Route::controller(StockController::class)->group(function () {
 
 Route::controller(ReceivingController::class)->group(function () {
     Route::get('/receiving', 'receive');
+    Route::get('receiving/export', 'export');
 
+    Route::put('/receiving/export', 'export_excel');
     Route::post('/receiving/store', 'store');
     Route::put('/receiving/{receiving}', 'update');
     Route::delete('/receiving/{receiving}', 'destroy');
@@ -62,6 +64,7 @@ Route::controller(ReceivingController::class)->group(function () {
 
 Route::controller(TransferInController::class)->group(function () {
     Route::get('/transfer_in', 'transferIn');
+    Route::get('transfer_in/export/', 'export_excel');
 
     Route::post('/transfer_in/store', 'store');
     Route::put('/transfer_in/{transfer_in}', 'update');

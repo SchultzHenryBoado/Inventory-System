@@ -193,12 +193,11 @@
       </div>
 
       <div class="mb-3 d-inline-block">
-        <form action="./php/export_receiving.php" method="post">
-          <button type="submit" name="export_receiving" class="btn btn-success fw-bold">Download Excel
-            <i class="fa-solid fa-file-excel ms-1"></i>
-          </button>
-        </form>
+        <a href="{{ url('/receiving/export') }}" class="btn btn-success fw-bold">Download Excel
+          <i class="fa-solid fa-file-excel ms-1"></i>
+        </a>
       </div>
+
 
 
       <div class="table-responsive mt-3">

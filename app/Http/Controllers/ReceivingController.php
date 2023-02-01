@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Receiving;
 use Illuminate\Http\Request;
+use App\Exports\ReceivingExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReceivingController extends Controller
 {
@@ -56,5 +58,10 @@ class ReceivingController extends Controller
         $receiving->delete();
 
         return redirect('/receiving')->with('message_delete', 'Successfully Deleted');
+    }
+
+    public function export_excel()
+    {
+        return Excel::download(new ReceivingExport, 'Receiving.xlsx');
     }
 }
