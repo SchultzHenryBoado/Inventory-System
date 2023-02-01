@@ -28,13 +28,6 @@ class UserController extends Controller
         return view('admin.user', ['user' => $data]);
     }
 
-    public function company()
-    {
-        $dataCompany = Company::all();
-
-        return view('admin.company', ['company' => $dataCompany]);
-    }
-
     public function stock()
     {
         $data = Stock::all();

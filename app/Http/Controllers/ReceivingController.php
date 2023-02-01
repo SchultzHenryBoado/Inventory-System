@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class ReceivingController extends Controller
 {
+    public function receive()
+    {
+        $data = Receiving::all();
+
+        return view('user.receiving', ['receive' => $data]);
+    }
 
     public function store(Request $request)
     {
@@ -25,9 +31,9 @@ class ReceivingController extends Controller
 
     public function storeId($id)
     {
-        $dataId = Receiving::findOrFail($id);
+        $data = Receiving::findOrFail($id);
 
-        return view('user.receiving', ['receive' => $dataId]);
+        return view('user.receiving', ['receiving' => $data]);
     }
 
     public function update(Request $request, Receiving $receiving)
@@ -42,6 +48,13 @@ class ReceivingController extends Controller
 
         $receiving->update($validated);
 
-        return redirect('/receiving')->with('message_update', 'Update successfully');
+        return redirect('/receiving')->with('message_update', 'Successfully Updated');
+    }
+
+    public function destroy(Request $request, Receiving $receiving)
+    {
+        $receiving->delete();
+
+        return redirect('/receiving')->with('message_delete', 'Successfully Deleted');
     }
 }

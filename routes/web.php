@@ -3,6 +3,7 @@
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ReceivingController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\TransferInController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,9 +27,7 @@ Route::get('/login', [UserController::class, 'index'])->middleware('guest');
 Route::controller(UserController::class)->group(function () {
     Route::get('/home', 'dashboard')->middleware('auth');
     Route::get('/user', 'user');
-    Route::get('/company', 'company');
     Route::get('/stock', 'stock');
-    Route::get('/receiving', 'receive');
 
     Route::post('/user/store', 'store');
     Route::post('/login/process', 'process');
@@ -37,6 +36,7 @@ Route::controller(UserController::class)->group(function () {
 });
 
 Route::controller(CompanyController::class)->group(function () {
+    Route::get('/company', 'company')->middleware('auth');
     Route::get('/company/{company}', 'storeId');
 
     Route::post('/company/store', 'store');
@@ -52,11 +52,18 @@ Route::controller(StockController::class)->group(function () {
     Route::delete('/stock/{stock}', 'destroy');
 });
 
-
 Route::controller(ReceivingController::class)->group(function () {
-
-    Route::get('/receiving/{receive}', 'storeId');
+    Route::get('/receiving', 'receive');
 
     Route::post('/receiving/store', 'store');
-    Route::put('/receiving/{receive}', 'update');
+    Route::put('/receiving/{receiving}', 'update');
+    Route::delete('/receiving/{receiving}', 'destroy');
+});
+
+Route::controller(TransferInController::class)->group(function () {
+    Route::get('/transfer_in', 'transferIn');
+
+    Route::post('/transfer_in/store', 'store');
+    Route::put('/transfer_in/{transfer_in}', 'update');
+    Route::delete('/transfer_in/{transfer_in}', 'delete');
 });

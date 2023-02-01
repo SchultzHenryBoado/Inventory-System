@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
+    public function company()
+    {
+        $dataCompany = Company::all();
+
+        return view('admin.company', ['company' => $dataCompany]);
+    }
 
     public function store(Request $request)
     {
@@ -18,13 +24,6 @@ class CompanyController extends Controller
         Company::create($validated);
 
         return redirect('/company')->with('message', 'successfully created');
-    }
-
-    public function storeId($id)
-    {
-        $data = Company::findOrFail($id);
-
-        return view('/company', ['company' => $data]);
     }
 
     public function update(Request $request, Company $company)

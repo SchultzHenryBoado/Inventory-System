@@ -34,13 +34,13 @@
         </button>
         <ul class="dropdown-menu dropdown-menu-sm-end">
           <li class="nav-item text-center">
-            <a class="dropdown-item" href="./change_password.php">Change Password</a>
+            <a class="dropdown-item" href="#">Change Password</a>
           </li>
           <li>
             <hr class="dropdown-divider">
           </li>
           <li class="nav-item text-center">
-            <a class="dropdown-item" href="./php/logout.php">Logout</a>
+            <a class="dropdown-item" href="#">Logout</a>
           </li>
         </ul>
       </div>
@@ -60,28 +60,28 @@
         <li class="nav-item fs-5">
           <div class="mb-3 d-flex flex-row">
             <i class="fa-solid fa-boxes-stacked text-white lh-lg mt-2"></i>
-            <a class="nav-link text-white ms-2 mt-1" href="./receiving.php">Receiving</a>
+            <a class="nav-link text-white ms-2 mt-1" href="/receiving">Receiving</a>
           </div>
         </li>
 
         <li class="nav-item fs-5">
           <div class="mb-3 d-flex flex-row">
             <i class="fa-solid fa-box-open text-white lh-lg mt-2"></i>
-            <a class="nav-link text-white ms-2 mt-1" href="./issuance.php">Issuance</a>
+            <a class="nav-link text-white ms-2 mt-1" href="/issuance">Issuance</a>
           </div>
         </li>
 
         <li class="nav-item fs-5">
           <div class="mb-3 d-flex flex-row">
             <i class="fa-solid fa-arrow-right text-white lh-lg mt-2"></i>
-            <a class="nav-link text-white ms-2 mt-1" href="./transfer_in.php">Transfer In</a>
+            <a class="nav-link text-white ms-2 mt-1" href="/transfer_in">Transfer In</a>
           </div>
         </li>
 
         <li class="nav-item fs-5">
           <div class="mb-3 d-flex flex-row">
             <i class="fa-solid fa-arrow-left-long text-white lh-lg mt-2"></i>
-            <a class="nav-link text-white ms-2 mt-1" href="./transfer_out.php">Transfer Out</a>
+            <a class="nav-link text-white ms-2 mt-1" href="/transfer_out">Transfer Out</a>
           </div>
         </li>
       </ul>
@@ -93,13 +93,13 @@
 
       @if(session()->has('message_update'))
       <div class="alert alert-warning">
-        <p>{{session('message')}}</p>
+        <p>{{session('message_update')}}</p>
       </div>
       @endif
 
       @if(session()->has('message_delete'))
       <div class="alert alert-danger">
-        <p>{{session('message')}}</p>
+        <p>{{session('message_delete')}}</p>
       </div>
       @endif
 
@@ -108,7 +108,6 @@
         <p>{{session('message')}}</p>
       </div>
       @endif
-
 
       <div class="mb-3 d-inline-block">
         <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#addReceiving">Add Receiving</button>
@@ -297,6 +296,29 @@
                           </div>
                           <div class="modal-footer">
                             <button type="submit" class="btn btn-success fw-bold">Update</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="d-inline-block">
+                  <button type="button" class="btn btn-danger" data-bs-target="#deleteModal-{{ $receives->id }}" data-bs-toggle="modal">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+
+                  <form action="/receiving/{{ $receives->id }}" method="post">
+                    @method('delete')
+                    @csrf
+                    <div class="modal fade" id="deleteModal-{{ $receives->id }}" tabindex="-1">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Are you sure you want to delete?</h5>
+                          </div>
+                          <div class="modal-footer">
+                            <button class="btn btn-danger fw-bold" type="submit" name="delete_btn">Delete</button>
                           </div>
                         </div>
                       </div>
