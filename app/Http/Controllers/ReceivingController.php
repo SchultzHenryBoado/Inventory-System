@@ -60,7 +60,7 @@ class ReceivingController extends Controller
         return redirect('/receiving')->with('message_delete', 'Successfully Deleted');
     }
 
-    public function export_excel()
+    public function export()
     {
         return Excel::download(new ReceivingExport, 'Receiving.xlsx');
     }

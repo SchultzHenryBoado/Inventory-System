@@ -244,7 +244,7 @@
                                   <input type="text" name="receiving_no" id="updateReceiveNo" class="form-control" placeholder="Receive No" value="{{ $receives->receiving_no }}">
                                   <label for="updateReceiveNo">Enter receive no.</label>
                                   @error('receiving_no')
-                                  <span class="text-danger">
+                                  <span class="invalid-feedback">
                                     {{$message}}
                                   </span>
                                   @enderror
@@ -263,7 +263,7 @@
                                   <input type="date" name="date" id="updateDate" class="form-control" value="{{ $receives->date }}">
                                   <label for="updateDate">Pick a date</label>
                                   @error('date')
-                                  <span class="text-danger">
+                                  <span class="invalid-feedback">
                                     {{$message}}
                                   </span>
                                   @enderror
@@ -274,7 +274,7 @@
                                   <input type="text" name="po_number" id="updatePoNumber" class="form-control" placeholder="PO Number" value="{{ $receives->po_number }}">
                                   <label for="updatePoNumber">Enter po no.</label>
                                   @error('po_number')
-                                  <span class="text-danger">
+                                  <span class="invalid-feedback">
                                     {{$message}}
                                   </span>
                                   @enderror
@@ -285,7 +285,7 @@
                                   <input type="text" name="description" id="updateDescription" class="form-control" placeholder="Description" value="{{ $receives->description }}">
                                   <label for="updateDescription">Description.</label>
                                   @error('description')
-                                  <span class="text-danger">
+                                  <span class="invalid-feedback">
                                     {{$message}}
                                   </span>
                                   @enderror
