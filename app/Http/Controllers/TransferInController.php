@@ -57,4 +57,9 @@ class TransferInController extends Controller
     {
         return Excel::download(new TransferInExport, 'Transfer_in.xlsx');
     }
+
+    public function import()
+    {
+        return 'hello world';
+    }
 }

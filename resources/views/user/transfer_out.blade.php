@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TRANSFER IN</title>
+  <title>TRANSFER OUT</title>
 
   <!-- CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -110,81 +110,69 @@
       @endif
 
       <div class="mb-3 d-inline-block">
-        <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#addModal">
-          Add Transfer In
-        </button>
+        <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#createTransferOutModal">Add Transfer Out</button>
 
-        <form action="/transfer_in/store" method="post">
+        <form action="/transfer_out/store" method="post">
           @csrf
-          <div class="modal fade" id="addModal" tabindex="-1">
+          <div class="modal fade" id="createTransferOutModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title">Create Transfer In</h5>
+                  <h5 class="modal-title">Create Transfer Out</h5>
                 </div>
                 <div class="modal-body">
                   <div class="row">
                     <div class="col-12">
-                      <div class="mb-3 form-floating">
-                        <input type="text" name="transfer_in_no" id="transferInNo" class="form-control" placeholder="Transfer No">
-                        <label for="transferInNo">Transfer In No</label>
-                        @error('transfer_in_no')
+                      <div class="form-floating mb-3">
+                        <input type="text" name="transfer_out_no" id="transferOutNo" class="form-control" placeholder="Transfer Out">
+                        <label for="transferOutNo">Transfer Out No.</label>
+                        @error('transfer_out_no')
                         <span class="text-danger">
-                          {{ $message }}
+                          {{$message}}
                         </span>
                         @enderror
                       </div>
                     </div>
                     <div class="col-12">
-                      <div class="mb-3 form-floating">
-                        <input type="text" name="reference_no" id="referenceNo" class="form-control" placeholder="Reference No">
-                        <label for="referenceNo">Reference No</label>
-                        @error('reference_no')
-                        <span class="text-danger">
-                          {{ $message }}
-                        </span>
-                        @enderror
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="mb-3 form-floating">
+                      <div class="form-floating mb-3">
                         <input type="date" name="date" id="date" class="form-control" placeholder="Date">
                         <label for="date">Date</label>
                         @error('date')
                         <span class="text-danger">
-                          {{ $message }}
+                          {{$message}}
                         </span>
                         @enderror
                       </div>
-                      <div class="col-12">
-                        <div class="mb-3 form-floating">
-                          <select name="warehouse" id="warehouse" class="form-select" placeholder="Warehouse">
-                            <option value="Warehouse">Warehouse</option>
-                          </select>
-                          <label for="warehouse">Warehouse</label>
-                          @error('warehouse')
-                          <span class="text-danger">
-                            {{ $message }}
-                          </span>
-                          @enderror
-                        </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-floating mb-3">
+                        <select name="warehouse" id="warehouse" class="form-select">
+                          <option value="warehouse">Warehouse</option>
+                        </select>
+                        <label for="warehouse">Warehouse</label>
+                        @error('warehouse')
+                        <span class="text-danger">
+                          {{$message}}
+                        </span>
+                        @enderror
                       </div>
-                      <div class="col-12">
-                        <div class="mb-3 form-floating">
-                          <input type="text" name="description" id="description" class="form-control" placeholder="Description">
-                          <label for="description">Description</label>
-                          @error('description')
-                          <span class="text-danger">
-                            {{ $message }}
-                          </span>
-                          @enderror
-                        </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-floating mb-3">
+                        <input type="text" name="description" id="description" class="form-control" placeholder="Description">
+                        <label for="description">Description</label>
+                        @error('description')
+                        <span class="text-danger">
+                          {{$message}}
+                        </span>
+                        @enderror
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="submit" class="btn btn-success fw-bold" name="create_transfer_in">Create</button>
+                  <button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-success fw-bold" name="create_transfer_out">Create</button>
                 </div>
               </div>
             </div>
@@ -193,124 +181,93 @@
       </div>
 
       <div class="mb-3 d-inline-block">
-        <a href="/transfer_in/export" class="btn btn-success fw-bold">Download Excel
+        <a href="/transfer_out/export" class="btn btn-success fw-bold">Download Excel
           <i class="fa-solid fa-file-excel ms-1"></i>
         </a>
       </div>
-
-      <!-- <div class="mb-3 d-inline-block">
-        <form action="/transfer_in/import" method="post" enctype="multipart/form-data">
-          @csrf
-          <div class="d-inline-block">
-            <input type="file" name="file" class="form-control">
-          </div>
-          <div class="d-inline-block">
-            <input type="submit" value="Import" class="btn btn-success fw-bold">
-          </div>
-        </form>
-      </div> -->
 
       <div class="table-responsive mt-3">
         <table class="table" id="myTable" style="width: 100%;">
           <thead>
             <tr>
-              <th>Transfer In No.</th>
-              <th>Reference No</th>
+              <th>Transfer Out No.</th>
               <th>Date</th>
               <th>Warehouse</th>
               <th>Description</th>
               <th>Actions</th>
             </tr>
           </thead>
-
           <tbody>
-            @foreach($transfer_in as $transfer_ins)
+            @foreach($transfer_out as $row)
             <tr>
-              <td>{{ $transfer_ins->transfer_in_no }}</td>
-              <td>{{ $transfer_ins->reference_no }}</td>
-              <td>{{ $transfer_ins->date }}</td>
-              <td>{{ $transfer_ins->warehouse }}</td>
-              <td>{{ $transfer_ins->description }}</td>
+              <td>{{ $row->transfer_out_no }}</td>
+              <td>{{ $row->date }}</td>
+              <td>{{ $row->warehouse }}</td>
+              <td>{{ $row->description }}</td>
               <td>
                 <div class="d-inline-block">
-                  <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal-$transfer_ins->id">
+                  <!-- Edit Modal -->
+                  <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal-{{ $row->id }}">
                     <i class="fa-solid fa-pen-to-square"></i>
                   </button>
-
-                  <form action="/transfer_in/{{ $transfer_ins->id }}" method="post">
+                  <form action="/transfer_out/{{ $row->id }}" method="post">
                     @csrf
                     @method('put')
-                    <!-- Modal -->
-                    <div class="modal fade" id="editModal-$transfer_ins->id" tabindex="-1">
+                    <div class="modal fade" id="editModal-{{ $row->id }}" tabindex="-1">
                       <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title fs-5">Update Transfer In</h5>
+                            <h5 class="modal-title">Update Transfer Out</h5>
                           </div>
                           <div class="modal-body">
+                            <input type="hidden" name="update_id" value="">
                             <div class="row">
                               <div class="col-12">
-                                <div class="mb-3 form-floating">
-                                  <input type="text" name="transfer_in_no" id="transferNo" class="form-control" placeholder="Transfer No" value="{{ $transfer_ins->transfer_in_no }}">
-                                  <label for="transferNo">Transfer In No</label>
-                                  @error('transfer_in_no')
+                                <div class="form-floating mb-3">
+                                  <input type="text" name="transfer_out_no" id="updateTransferOutNo" class="form-control" placeholder="Transfer Out" value="{{ $row->transfer_out_no }}">
+                                  <label for="updateTransferOut">Transfer Out No.</label>
+                                  @error('transfer_out_no')
                                   <span class="text-danger">
-                                    {{ $message }}
+                                    {{$message}}
                                   </span>
                                   @enderror
                                 </div>
                               </div>
                               <div class="col-12">
-                                <div class="mb-3 form-floating">
-                                  <input type="text" name="reference_no" id="referenceNo" class="form-control" placeholder="Reference No" value="{{ $transfer_ins->reference_no }}">
-                                  <label for="referenceNo">Reference No</label>
-                                  @error('reference_no')
-                                  <span class="text-danger">
-                                    {{ $message }}
-                                  </span>
-                                  @enderror
-                                </div>
-                              </div>
-                              <div class="col-12">
-                                <div class="mb-3 form-floating">
-                                  <input type="date" name="date" id="date" class="form-control" placeholder="Date" value="{{ $transfer_ins->date }}">
-                                  <label for="date">Date</label>
+                                <div class="form-floating mb-3">
+                                  <input type="date" name="date" id="updateDate" class="form-control" placeholder="Date" value="{{ $row->date }}">
+                                  <label for="updateDate">Date</label>
                                   @error('date')
                                   <span class="text-danger">
-                                    {{ $message }}
+                                    {{$message}}
                                   </span>
                                   @enderror
                                 </div>
-                                <div class="col-12">
-                                  <div class="mb-3 form-floating">
-                                    <select name="warehouse" id="warehouse" class="form-select" placeholder="Warehouse" value="{{ $transfer_ins->warehouse }}">
-                                      <option value="Warehouse">Warehouse</option>
-                                    </select>
-                                    <label for="warehouse">Warehouse</label>
-                                    @error('warehouse')
-                                    <span class="text-danger">
-                                      {{ $message }}
-                                    </span>
-                                    @enderror
-                                  </div>
+                              </div>
+                              <div class="col-12">
+                                <div class="form-floating mb-3">
+                                  <select name="warehouse" id="updateWarehouse" class="form-select">
+                                    <option value="warehouse">Warehouse</option>
+                                  </select>
+                                  <label for="updateWarehouse">Warehouse</label>
                                 </div>
-                                <div class="col-12">
-                                  <div class="mb-3 form-floating">
-                                    <input type="text" name="description" id="description" class="form-control" placeholder="Description" value="{{ $transfer_ins->description }}">
-                                    <label for="description">Description</label>
-                                    @error('description')
-                                    <span class="text-danger">
-                                      {{ $message }}
-                                    </span>
-                                    @enderror
-                                  </div>
+                              </div>
+                              <div class="col-12">
+                                <div class="form-floating mb-3">
+                                  <input type="description" name="description" id="updateDescription" class="form-control" placeholder="Description" value="{{ $row->description }}">
+                                  <label for="updateDescription">Description</label>
+                                  @error('description')
+                                  <span class="text-danger">
+                                    {{$message}}
+                                  </span>
+                                  @enderror
                                 </div>
                               </div>
                             </div>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="submit" class="btn btn-success fw-bold">Update</button>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                              <button type="submit" class="btn btn-success fw-bold" name="update_transfer_out">Update</button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -319,21 +276,22 @@
                 </div>
 
                 <div class="d-inline-block">
-                  <button type="button" class="btn btn-danger" data-bs-target="#deleteModal-{{ $transfer_ins->id }}" data-bs-toggle="modal">
+                  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTransferOut-{{ $row->id }}">
                     <i class="fa-solid fa-trash"></i>
                   </button>
 
-                  <form action="/transfer_in/{{ $transfer_ins->id }}" method="post">
-                    @method('delete')
+                  <form action="/transfer_out/{{ $row->id }}" method="post">
                     @csrf
-                    <div class="modal fade" id="deleteModal-{{ $transfer_ins->id }}" tabindex="-1">
+                    @method('delete')
+                    <div class="modal fade" id="deleteTransferOut-{{ $row->id }}" tabindex="-1">
                       <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                           <div class="modal-header">
                             <h5 class="modal-title">Are you sure you want to delete?</h5>
                           </div>
                           <div class="modal-footer">
-                            <button class="btn btn-danger fw-bold" type="submit" name="delete_btn">Delete</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger" name="delete_transfer_out">Delete</button>
                           </div>
                         </div>
                       </div>

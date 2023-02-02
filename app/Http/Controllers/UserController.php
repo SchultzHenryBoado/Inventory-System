@@ -72,7 +72,7 @@ class UserController extends Controller
         if (auth()->attempt($validated)) {
             $request->session()->regenerate();
 
-            return redirect('/home');
+            return redirect('/dashboard');
         }
     }
 
