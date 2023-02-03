@@ -24,7 +24,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', [UserController::class, 'index'])->middleware('guest')->name('login');
+// USERS
+Route::controller(UserController::class)->group(function () {
+    Route::get('/login', [UserController::class, 'index'])->middleware('guest')->name('login');
+
+    // Route::get('/dashboard', 'dashboard');
+    // Route::get('/user', 'user');
+    // Route::get('/stock', 'stock');
+
+    Route::post('/user/store', 'store');
+    Route::post('/login/process', 'process');
+    Route::get('/logout', 'logout');
+    Route::put('/user/{user}', 'updateUser');
+});
 
 Route::controller(ReceivingController::class)->group(function () {
     Route::get('/receiving', 'receive')->middleware('auth');
@@ -46,39 +58,30 @@ Route::controller(TransferInController::class)->group(function () {
 });
 
 Route::controller(TransferOutController::class)->group(function () {
-    Route::get('/transfer_out', 'transferOut')->middleware('auth');
+    Route::get('/transfer_out', 'transferOut');
     Route::get('/transfer_out/export', 'export');
 
     Route::post('/transfer_out/store', 'store');
     Route::put('/transfer_out/{transfer_out}', 'update');
     Route::delete('/transfer_out/{transfer_out}', 'destroy');
 });
+// USERS
 
 
-Route::controller(UserController::class)->group(function () {
-    Route::get('/dashboard', 'dashboard');
-    Route::get('/user', 'user');
-    Route::get('/stock', 'stock');
 
-    Route::post('/user/store', 'store');
-    Route::post('/login/process', 'process');
-    Route::get('/logout', 'logout');
-    Route::put('/user/{user}', 'updateUser');
-});
+// Route::controller(CompanyController::class)->group(function () {
+//     Route::get('/company', 'company')->middleware('auth');
+//     Route::get('/company/{company}', 'storeId');
 
-Route::controller(CompanyController::class)->group(function () {
-    Route::get('/company', 'company')->middleware('auth');
-    Route::get('/company/{company}', 'storeId');
+//     Route::post('/company/store', 'store');
+//     Route::put('/company/{company}', 'update');
+//     Route::delete('/company/{company}', 'destroy');
+// });
 
-    Route::post('/company/store', 'store');
-    Route::put('/company/{company}', 'update');
-    Route::delete('/company/{company}', 'destroy');
-});
+// Route::controller(StockController::class)->group(function () {
+//     Route::get('/stock/{stock}', 'show');
 
-Route::controller(StockController::class)->group(function () {
-    Route::get('/stock/{stock}', 'show');
-
-    Route::post('/stock/store', 'store');
-    Route::put('/stock/{stock}', 'update');
-    Route::delete('/stock/{stock}', 'destroy');
-});
+//     Route::post('/stock/store', 'store');
+//     Route::put('/stock/{stock}', 'update');
+//     Route::delete('/stock/{stock}', 'destroy');
+// });
