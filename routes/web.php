@@ -28,6 +28,7 @@ Route::get('/', function () {
 // USERS
 Route::controller(UserController::class)->group(function () {
     Route::get('/user', 'index')->middleware('guest')->name('login');
+    Route::get('/change_password', 'changePass');
 
     Route::post('/login/process', 'process');
     Route::get('/logout', 'logout');
@@ -91,3 +92,4 @@ Route::controller(StockController::class)->group(function () {
     Route::put('/stock/{stock}', 'update');
     Route::delete('/stock/{stock}', 'destroy');
 });
+// ADMIN

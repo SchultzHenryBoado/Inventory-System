@@ -34,13 +34,13 @@
         </button>
         <ul class="dropdown-menu dropdown-menu-sm-end">
           <li class="nav-item text-center">
-            <a class="dropdown-item" href="#">Change Password</a>
+            <a class="dropdown-item" href="/change_password">Change Password</a>
           </li>
           <li>
             <hr class="dropdown-divider">
           </li>
           <li class="nav-item text-center">
-            <a class="dropdown-item" href="/logout">Logout</a>
+            <a class="dropdown-item" href="/logout  ">Logout</a>
           </li>
         </ul>
       </div>

@@ -78,4 +78,9 @@ class UserController extends Controller
 
         return redirect('/user_profiles')->with('message_update', 'Updated Successfully');
     }
+
+    public function changePass()
+    {
+        return view('user.change_password');
+    }
 }
