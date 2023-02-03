@@ -30,9 +30,9 @@
               <div class="mb-3">
                 <img src="{{ asset('img/pmi_logo.png') }}" alt="PMI Logo" class="ms-5 img-fluid" style="height: 100px; width: 380px;">
               </div>
-              <p class="h1 mb-5 text-center">User Login</p>
+              <p class="h1 mb-5 text-center">Admin Login</p>
 
-              <form action="/login/process" method="post">
+              <form action="/admin/login" method="post">
                 @csrf
                 <!-- Email input -->
                 <div class="form-floating mb-4">

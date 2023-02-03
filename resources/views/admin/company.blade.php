@@ -77,7 +77,7 @@
               <div class="accordion-body">
                 <ul class="nav flex-column">
                   <li class="nav-item">
-                    <a href="/user" class="nav-link text-dark">User Profile</a>
+                    <a href="/user_profiles" class="nav-link text-dark">User Profile</a>
                   </li>
                   <li class="nav-item">
                     <a href="/company" class="nav-link text-dark">Company Profile</a>

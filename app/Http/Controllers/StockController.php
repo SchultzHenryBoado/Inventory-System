@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class StockController extends Controller
 {
+    public function stocks()
+    {
+        $data = Stock::all();
+
+        return view('admin.stock', ['stocks' => $data]);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([

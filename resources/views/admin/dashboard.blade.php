@@ -40,7 +40,7 @@
             <hr class="dropdown-divider">
           </li>
           <li class="nav-item text-center">
-            <a class="dropdown-item" href="{{ url ('/logout') }}">Logout</a>
+            <a class="dropdown-item" href="{{ url ('/admin_logout') }}">Logout</a>
           </li>
         </ul>
       </div>
@@ -75,7 +75,7 @@
               <div class="accordion-body">
                 <ul class="nav flex-column">
                   <li class="nav-item">
-                    <a href="/user" class="nav-link text-dark">User Profile</a>
+                    <a href="/user_profiles" class="nav-link text-dark">User Profile</a>
                   </li>
                   <li class="nav-item">
                     <a href="/company" class="nav-link text-dark">Company Profile</a>

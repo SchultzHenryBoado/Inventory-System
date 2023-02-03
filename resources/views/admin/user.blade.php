@@ -75,7 +75,7 @@
               <div class="accordion-body">
                 <ul class="nav flex-column">
                   <li class="nav-item">
-                    <a href="/user" class="nav-link text-dark">User Profile</a>
+                    <a href="/user_profiles" class="nav-link text-dark">User Profile</a>
                   </li>
                   <li class="nav-item">
                     <a href="/company" class="nav-link text-dark">Company Profile</a>
@@ -112,7 +112,7 @@
         Add Users
       </button>
 
-      <form action="/user/store" method="post">
+      <form action="/user_profiles/store" method="post">
         @csrf
         <div class="modal fade" id="createUsers" tabindex="-1">
           <div class="modal-dialog modal-dialog-centered">
@@ -125,7 +125,7 @@
                   <!-- last name -->
                   <div class="form-floating mb-3">
                     <input type="text" name="last_name" id="lastName" class="form-control" placeholder="Lastname">
-                    <label for="lastName">Enter a surname</label>
+                    <label for="lastName">Enter a lastname</label>
                     @error('last_name')
                     <span class="text-danger">
                       {{$message}}
@@ -184,17 +184,6 @@
                 <div class="col-12">
                   <!-- status -->
                   <div class="form-floating mb-3">
-                    <select name="account_role" id="accountRoles" class="form-select">
-                      <option value="Users">Users</option>
-                      <option value="Admin">Admin</option>
-                    </select>
-                    <label for="accountRoles">Choose an account type</label>
-
-                  </div>
-                </div>
-                <div class="col-12">
-                  <!-- status -->
-                  <div class="form-floating mb-3">
                     <select name="account_status" id="usersStatus" class="form-select">
                       <option value="ACTIVE">ACTIVE</option>
                       <option value="INACTIVE">INACTIVE</option>
@@ -222,7 +211,6 @@
             <th>First name</th>
             <th>Email</th>
             <th>Password</th>
-            <th>Account Type</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
@@ -233,14 +221,13 @@
             <td>{{ $users->first_name }}</td>
             <td>{{ $users->email }}</td>
             <td>{{ $users->password }}</td>
-            <td>{{ $users->account_role }}</td>
             <td>{{ $users->account_status }}</td>
             <td>
               <button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#updateUserModal-{{ $users->id }}">
                 <i class="fa-solid fa-pen-to-square"></i>
               </button>
 
-              <form action="/user/{{ $users->id }}" method="post">
+              <form action="/user_profiles/{{ $users->id }}" method="post">
                 @csrf
                 @method('put')
                 <div class="modal fade" id="updateUserModal-{{ $users->id }}" tabindex="-1">
@@ -297,18 +284,9 @@
                           </div>
                           <div class="col-12">
                             <div class="mb-3 form-floating">
-                              <select name="account_role" id="updateAccountRole" class="form-select">
-                                <option value="User">User</option>
-                                <option value="Admin">Admin</option>
-                              </select>
-                              <label for="updateAccountRole">Account Role</label>
-                            </div>
-                          </div>
-                          <div class="col-12">
-                            <div class="mb-3 form-floating">
                               <select name="account_status" id="updateStatus" class="form-select">
-                                <option value="Active">Active</option>
-                                <option value="Inactive">Inactive</option>
+                                <option value="ACTIVE">Active</option>
+                                <option value="INACTIVE">Inactive</option>
                               </select>
                               <label for="updateStatus">Account Status</label>
                             </div>

@@ -19,14 +19,10 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'last_name',
-        'first_name',
-        'email',
-        'password',
-        'account_role',
-        'account_status'
-    ];
+
+    // protected $guard = 'user';
+
+    protected $fillable = ['last_name', 'first_name', 'email', 'password', 'account_status'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,11 +42,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    protected function role(): Attribute
-    {
-        return new Attribute(
-            get: fn ($value) => ['user', 'admin'][$value],
-        );
-    }
 }

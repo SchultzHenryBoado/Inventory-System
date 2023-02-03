@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ReceivingController;
 use App\Http\Controllers\StockController;
@@ -26,16 +27,14 @@ Route::get('/', function () {
 
 // USERS
 Route::controller(UserController::class)->group(function () {
-    Route::get('/login', [UserController::class, 'index'])->middleware('guest')->name('login');
+    Route::get('/user', 'index')->middleware('guest')->name('login');
 
-    // Route::get('/dashboard', 'dashboard');
-    // Route::get('/user', 'user');
-    // Route::get('/stock', 'stock');
-
-    Route::post('/user/store', 'store');
     Route::post('/login/process', 'process');
     Route::get('/logout', 'logout');
-    Route::put('/user/{user}', 'updateUser');
+
+    Route::get('/user_profiles', 'user_profiles');
+    Route::post('/user_profiles/store', 'store');
+    Route::put('/user_profiles/{user}', 'update');
 });
 
 Route::controller(ReceivingController::class)->group(function () {
@@ -67,21 +66,28 @@ Route::controller(TransferOutController::class)->group(function () {
 });
 // USERS
 
+// ADMIN
+Route::controller(AdminController::class)->group(function () {
+    Route::get('/admin', 'index')->middleware('guest');
+    Route::get('/dashboard', 'dashboard')->middleware('auth:admin');
 
+    Route::post('/admin/login', 'login');
+    Route::get('/admin_logout', 'logout');
+});
 
-// Route::controller(CompanyController::class)->group(function () {
-//     Route::get('/company', 'company')->middleware('auth');
-//     Route::get('/company/{company}', 'storeId');
+Route::controller(CompanyController::class)->group(function () {
+    Route::get('/company', 'company')->middleware('auth:admin');
+    Route::get('/company/{company}', 'storeId');
 
-//     Route::post('/company/store', 'store');
-//     Route::put('/company/{company}', 'update');
-//     Route::delete('/company/{company}', 'destroy');
-// });
+    Route::post('/company/store', 'store');
+    Route::put('/company/{company}', 'update');
+    Route::delete('/company/{company}', 'destroy');
+});
 
-// Route::controller(StockController::class)->group(function () {
-//     Route::get('/stock/{stock}', 'show');
+Route::controller(StockController::class)->group(function () {
+    Route::get('/stock', 'stocks')->middleware('auth:admin');
 
-//     Route::post('/stock/store', 'store');
-//     Route::put('/stock/{stock}', 'update');
-//     Route::delete('/stock/{stock}', 'destroy');
-// });
+    Route::post('/stock/store', 'store');
+    Route::put('/stock/{stock}', 'update');
+    Route::delete('/stock/{stock}', 'destroy');
+});
