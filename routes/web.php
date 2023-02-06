@@ -71,7 +71,7 @@ Route::controller(TransferOutController::class)->group(function () {
 
 // ADMIN
 Route::controller(AdminController::class)->group(function () {
-    Route::get('/admin', 'index')->middleware('guest');
+    Route::get('/admin', 'index')->middleware('guest')->name('admin');
     Route::get('/dashboard', 'dashboard')->middleware('auth:admin');
 
     Route::post('/admin/login', 'login');
