@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Receiving;
+use App\Models\TransferOut;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
 
 class AdminController extends Controller
@@ -15,7 +18,10 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        return view('admin.dashboard');
+        $dataReceiving = Receiving::count();
+        $dataTransferOut = TransferOut::count();
+
+        return view('admin.dashboard', ['dataReceiving' => $dataReceiving, 'dataTransferOut' => $dataTransferOut]);
     }
 
     public function login(Request $request)
@@ -29,7 +35,7 @@ class AdminController extends Controller
             $request->session()->regenerateToken();
             return redirect('/dashboard');
         } else {
-            return back();
+            return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
         }
     }
 

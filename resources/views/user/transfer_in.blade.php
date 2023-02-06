@@ -212,7 +212,7 @@
 
       <div class="table-responsive mt-3">
         <table class="table" id="myTable" style="width: 100%;">
-          <thead>
+          <thead class="table-success">
             <tr>
               <th>Transfer In No.</th>
               <th>Reference No</th>

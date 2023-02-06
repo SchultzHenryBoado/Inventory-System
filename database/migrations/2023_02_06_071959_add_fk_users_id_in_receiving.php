@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::table('receivings', function (Blueprint $table) {
-        //     $table->unsignedBigInteger('users_id')->nullable();
-        //     $table->foreign('users_id')->references('id')->on('users');
-        // });
+        Schema::table('receivings', function (Blueprint $table) {
+            $table->foreignId('users_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->nullable();
+        });
     }
 
     /**
@@ -26,8 +25,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('receivings', function (Blueprint $table) {
-            $table->dropForeign('users_id');
-        });
+        // Schema::table('receivings', function (Blueprint $table) {
+        //     $table->dropColumn('users_id');
+        //     $table->dropForeign('users_id');
+        // });
     }
 };

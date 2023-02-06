@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Receiving;
 use Illuminate\Http\Request;
 use App\Exports\ReceivingExport;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReceivingController extends Controller
@@ -16,14 +18,14 @@ class ReceivingController extends Controller
         return view('user.receiving', ['receive' => $data]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
         $validated = $request->validate([
             "receiving_no" => 'required',
             'warehouse' => 'required',
             "date" => 'required',
             "po_number" => 'required',
-            "description" => 'required'
+            "description" => 'required',
         ]);
 
         Receiving::create($validated);
@@ -31,21 +33,17 @@ class ReceivingController extends Controller
         return redirect('/receiving')->with('message', 'Created successfully');
     }
 
-    public function storeId($id)
-    {
-        $data = Receiving::findOrFail($id);
-
-        return view('user.receiving', ['receiving' => $data]);
-    }
-
     public function update(Request $request, Receiving $receiving)
     {
+        $users_id = auth()->user()->id;
+
         $validated = $request->validate([
             "receiving_no" => 'required',
             'warehouse' => 'required',
             "date" => 'required',
             "po_number" => 'required',
-            "description" => 'required'
+            "description" => 'required',
+            'users_id' => $users_id | 'required'
         ]);
 
         $receiving->update($validated);

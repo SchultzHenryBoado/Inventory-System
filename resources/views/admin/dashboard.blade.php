@@ -103,7 +103,7 @@
               <p class="fs-5">Received</p>
             </div>
             <div class="card-body">
-              <p class="fs-1 text-end">10</p>
+              <p class="fs-1 text-end"></p>
             </div>
           </div>
         </div>
@@ -115,7 +115,7 @@
               <p class="fs-5 text-white">Issued</p>
             </div>
             <div class="card-body">
-              <p class="fs-1 text-end">10</p>
+              <p class="fs-1 text-end"></p>
             </div>
           </div>
         </div>
@@ -127,7 +127,7 @@
               <p class="fs-5 text-white">Transfer Out</p>
             </div>
             <div class="card-body">
-              <p class="fs-1 text-end">10</p>
+              <p class="fs-1 text-end"></p>
             </div>
           </div>
         </div>
@@ -139,7 +139,7 @@
               <p class="fs-5">Unposted Receiving</p>
             </div>
             <div class="card-body">
-              <p class="fs-1 text-end">10</p>
+              <p class="fs-1 text-end">{{ $dataReceiving }}</p>
             </div>
           </div>
         </div>
@@ -151,7 +151,7 @@
               <p class="fs-5 text-white">Unposted Issued</p>
             </div>
             <div class="card-body">
-              <p class="fs-1 text-end">10</p>
+              <p class="fs-1 text-end"></p>
             </div>
           </div>
         </div>
@@ -163,7 +163,7 @@
               <p class="fs-5 text-white">Unposted Transfer Out</p>
             </div>
             <div class="card-body">
-              <p class="fs-1 text-end">10</p>
+              <p class="fs-1 text-end">{{ $dataTransferOut }}</p>
             </div>
           </div>
         </div>

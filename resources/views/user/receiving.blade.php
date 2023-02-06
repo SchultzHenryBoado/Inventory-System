@@ -86,6 +86,10 @@
         </li>
       </ul>
     </div>
+
+    <div class="offcanvas-footer bg-success">
+      <p class="text-light ms-3">Logging in as {{ auth()->user()->last_name }}</p>
+    </div>
   </div>
 
   <div class="container-fluid mt-5">
@@ -198,11 +202,9 @@
         </a>
       </div>
 
-
-
       <div class="table-responsive mt-3">
         <table class="table" id="myTable" style="width: 100%;">
-          <thead>
+          <thead class="table-success">
             <tr>
               <th>Receiving No.</th>
               <th>Warehouse</th>
@@ -214,6 +216,7 @@
           </thead>
           <tbody>
             @foreach($receive as $receives)
+            @can('view', $receives)
             <tr>
               <td>{{ $receives->receiving_no }}</td>
               <td>{{ $receives->warehouse }}</td>
@@ -326,6 +329,7 @@
                 </div>
               </td>
             </tr>
+            @endcan
             @endforeach
           </tbody>
         </table>

@@ -36,11 +36,13 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/user_profiles', 'user_profiles');
     Route::post('/user_profiles/store', 'store');
     Route::put('/user_profiles/{user}', 'update');
+    Route::put('/change_password/update', 'update_password');
 });
 
 Route::controller(ReceivingController::class)->group(function () {
     Route::get('/receiving', 'receive')->middleware('auth');
     Route::get('receiving/export', 'export');
+    Route::get('/receiving/{receive}', 'show');
 
     Route::put('/receiving/export', 'export_excel');
     Route::post('/receiving/store', 'store');

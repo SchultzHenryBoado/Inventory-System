@@ -10,5 +10,5 @@ class Receiving extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['receiving_no', 'warehouse', 'date', 'po_number', 'description'];
+    protected $fillable = ['receiving_no', 'warehouse', 'date', 'po_number', 'description', 'users_id'];
 }
