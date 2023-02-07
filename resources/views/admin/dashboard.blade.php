@@ -151,7 +151,7 @@
               <p class="fs-5 text-white">Unposted Issued</p>
             </div>
             <div class="card-body">
-              <p class="fs-1 text-end"></p>
+              <p class="fs-1 text-end">{{ $dataIssue }}</p>
             </div>
           </div>
         </div>

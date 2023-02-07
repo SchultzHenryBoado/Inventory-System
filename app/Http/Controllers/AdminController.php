@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Issue;
 use App\Models\Receiving;
 use App\Models\TransferOut;
 use Illuminate\Http\Request;
@@ -20,8 +21,9 @@ class AdminController extends Controller
     {
         $dataReceiving = Receiving::count();
         $dataTransferOut = TransferOut::count();
+        $dataIssue = Issue::count();
 
-        return view('admin.dashboard', ['dataReceiving' => $dataReceiving, 'dataTransferOut' => $dataTransferOut]);
+        return view('admin.dashboard', ['dataReceiving' => $dataReceiving, 'dataTransferOut' => $dataTransferOut, 'dataIssue' => $dataIssue]);
     }
 
     public function login(Request $request)

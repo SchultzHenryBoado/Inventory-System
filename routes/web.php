@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\IssueController;
 use App\Http\Controllers\ReceivingController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\TransferInController;
@@ -48,6 +49,15 @@ Route::controller(ReceivingController::class)->group(function () {
     Route::post('/receiving/store', 'store');
     Route::put('/receiving/{receiving}', 'update');
     Route::delete('/receiving/{receiving}', 'destroy');
+});
+
+Route::controller(IssueController::class)->group(function () {
+    Route::get('/issuance', 'issue');
+    Route::get('/issuance/export', 'export');
+
+    Route::post('/issuance/store', 'store');
+    Route::put('/issuance/{issue}', 'update');
+    Route::delete('/issuance/{issue}', 'destroy');
 });
 
 Route::controller(TransferInController::class)->group(function () {

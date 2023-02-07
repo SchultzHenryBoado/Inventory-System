@@ -20,9 +20,6 @@ class ReceivingController extends Controller
 
     public function store(Request $request, Receiving $receiving)
     {
-        // if ($receiving->users_id != auth()->id()) {
-        //     abort(403, 'Unauthorized Action');
-        // }
 
         $validated = $request->validate([
             "receiving_no" => 'required',
