@@ -9,5 +9,5 @@ class TransferIn extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['transfer_in_no', 'reference_no', 'date', 'warehouse', 'description'];
+    protected $fillable = ['transfer_in_no', 'reference_no', 'date', 'warehouse', 'description', 'users_id'];
 }

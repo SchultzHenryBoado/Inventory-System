@@ -26,7 +26,13 @@ class TransferOutController extends Controller
             'description' => 'required'
         ]);
 
-        TransferOut::create($validated);
+        TransferOut::create([
+            'transfer_out_no' => $validated['transfer_out_no'],
+            'date' => $validated['date'],
+            'warehouse' => $validated['warehouse'],
+            'description' => $validated['description'],
+            'users_id' => auth()->user()->id
+        ]);
 
         return redirect('/transfer_out')->with('message', 'Successfully Created');
     }

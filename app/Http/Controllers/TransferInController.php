@@ -26,7 +26,14 @@ class TransferInController extends Controller
             'description' => 'required'
         ]);
 
-        TransferIn::create($validated);
+        TransferIn::create([
+            'transfer_in_no' => $validated['transfer_in_no'],
+            'reference_no' => $validated['reference_no'],
+            'date' => $validated['date'],
+            'warehouse' => $validated['warehouse'],
+            'description' => $validated['description'],
+            'users_id' => auth()->user()->id
+        ]);
 
         return redirect('/transfer_in')->with('message', 'Successfully Created');
     }

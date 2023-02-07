@@ -9,5 +9,5 @@ class TransferOut extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['transfer_out_no', 'date', 'warehouse', 'description'];
+    protected $fillable = ['transfer_out_no', 'date', 'warehouse', 'description', 'users_id'];
 }

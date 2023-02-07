@@ -16,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Models\Receiving' => 'App\Policies\ReceivePolicy',
+        'App\Models\TransferIn' => 'App\Policies\TransferInPolicy',
     ];
 
     /**

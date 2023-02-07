@@ -199,6 +199,7 @@
           </thead>
           <tbody>
             @foreach($transfer_out as $row)
+            @can('view', $row)
             <tr>
               <td>{{ $row->transfer_out_no }}</td>
               <td>{{ $row->date }}</td>
@@ -300,6 +301,7 @@
                 </div>
               </td>
             </tr>
+            @endcan
             @endforeach
           </tbody>
         </table>

@@ -32,7 +32,14 @@ class ReceivingController extends Controller
             "description" => 'required'
         ]);
 
-        Receiving::create($validated);
+        Receiving::create([
+            'receiving_no' => $validated['receiving_no'],
+            'warehouse' => $validated['warehouse'],
+            'date' => $validated['date'],
+            'po_number' => $validated['po_number'],
+            'description' => $validated['description'],
+            'users_id' => auth()->user()->id
+        ]);
 
         return redirect('/receiving')->with('message', 'Created successfully');
     }

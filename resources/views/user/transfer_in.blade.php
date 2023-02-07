@@ -225,6 +225,7 @@
 
           <tbody>
             @foreach($transfer_in as $transfer_ins)
+            @can('view', $transfer_ins)
             <tr>
               <td>{{ $transfer_ins->transfer_in_no }}</td>
               <td>{{ $transfer_ins->reference_no }}</td>
@@ -342,6 +343,7 @@
                 </div>
               </td>
             </tr>
+            @endcan
             @endforeach
           </tbody>
         </table>
