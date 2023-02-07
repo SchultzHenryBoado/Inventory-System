@@ -18,14 +18,18 @@ class ReceivingController extends Controller
         return view('user.receiving', ['receive' => $data]);
     }
 
-    public function store(Request $request, User $user)
+    public function store(Request $request, Receiving $receiving)
     {
+        // if ($receiving->users_id != auth()->id()) {
+        //     abort(403, 'Unauthorized Action');
+        // }
+
         $validated = $request->validate([
             "receiving_no" => 'required',
             'warehouse' => 'required',
             "date" => 'required',
             "po_number" => 'required',
-            "description" => 'required',
+            "description" => 'required'
         ]);
 
         Receiving::create($validated);
@@ -35,7 +39,6 @@ class ReceivingController extends Controller
 
     public function update(Request $request, Receiving $receiving)
     {
-        $users_id = auth()->user()->id;
 
         $validated = $request->validate([
             "receiving_no" => 'required',
@@ -43,7 +46,6 @@ class ReceivingController extends Controller
             "date" => 'required',
             "po_number" => 'required',
             "description" => 'required',
-            'users_id' => $users_id | 'required'
         ]);
 
         $receiving->update($validated);
