@@ -30,6 +30,7 @@ Route::get('/', function () {
 Route::controller(UserController::class)->group(function () {
     Route::get('/user', 'index')->middleware('guest')->name('login');
     Route::get('/change_password', 'changePass');
+    Route::get('/forgot_password', 'forgot');
 
     Route::post('/login/process', 'process');
     Route::get('/logout', 'logout');

@@ -105,4 +105,9 @@ class UserController extends Controller
 
         return back()->with("status", "Password changed successfully!");
     }
+
+    public function forgot()
+    {
+        return view('user.forgot_password');
+    }
 }
