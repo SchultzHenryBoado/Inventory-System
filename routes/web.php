@@ -29,8 +29,9 @@ Route::get('/', function () {
 // USERS
 Route::controller(UserController::class)->group(function () {
     Route::get('/user', 'index')->middleware('guest')->name('login');
-    Route::get('/change_password', 'changePass');
+    Route::get('/change_password', 'changePass')->middleware('auth');
     Route::get('/forgot_password', 'forgot');
+    Route::get('/reset_password/{token}', 'reset')->name('reset_password_link');
 
     Route::post('/login/process', 'process');
     Route::get('/logout', 'logout');
@@ -39,6 +40,8 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/user_profiles/store', 'store');
     Route::put('/user_profiles/{user}', 'update');
     Route::put('/change_password/update', 'update_password');
+    Route::post('/forgot_password/submit', 'submit');
+    Route::post('/reset_password', 'submit_reset_password');
 });
 
 Route::controller(ReceivingController::class)->group(function () {

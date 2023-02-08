@@ -15,10 +15,24 @@
 </head>
 
 <body>
+
+  <nav class="navbar navbar-expand-lg bg-success">
+    <div class="container-fluid">
+      <a href="/user" class="navbar-brand fw-bold text-white">Inventory Management System</a>
+    </div>
+  </nav>
+
   <div class="container-fluid">
     <div class="container mt-5">
 
-      <form action="#" method="post">
+      @if(session()->has('message'))
+      <div class="alert alert-success" role="alert">
+        {{ session('message') }}
+      </div>
+      @endif
+
+      <form action="/forgot_password/submit" method="post">
+        @csrf
         <div class="card">
           <div class="card-header">
             <h5 class="card-title">Forgot Password</h5>
@@ -29,6 +43,11 @@
                 <div class="form-floating mb-3">
                   <input type="email" name="email" id="email" placeholder="Email" class="form-control">
                   <label for="email">Email</label>
+                  @error('email')
+                  <span class="text-danger">
+                    {{$message}}
+                  </span>
+                  @enderror
                 </div>
               </div>
             </div>
