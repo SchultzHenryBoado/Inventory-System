@@ -36,7 +36,7 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/login/process', 'process');
     Route::get('/logout', 'logout');
 
-    Route::get('/user_profiles', 'user_profiles');
+    Route::get('/user_profiles', 'user_profiles')->middleware('auth:admin');
     Route::post('/user_profiles/store', 'store');
     Route::put('/user_profiles/{user}', 'update');
     Route::put('/change_password/update', 'update_password');
@@ -56,7 +56,7 @@ Route::controller(ReceivingController::class)->group(function () {
 });
 
 Route::controller(IssueController::class)->group(function () {
-    Route::get('/issuance', 'issue');
+    Route::get('/issuance', 'issue')->middleware('auth');
     Route::get('/issuance/export', 'export');
 
     Route::post('/issuance/store', 'store');
@@ -74,7 +74,7 @@ Route::controller(TransferInController::class)->group(function () {
 });
 
 Route::controller(TransferOutController::class)->group(function () {
-    Route::get('/transfer_out', 'transferOut');
+    Route::get('/transfer_out', 'transferOut')->middleware('auth');
     Route::get('/transfer_out/export', 'export');
 
     Route::post('/transfer_out/store', 'store');

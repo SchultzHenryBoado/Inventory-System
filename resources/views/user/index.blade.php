@@ -62,6 +62,12 @@
                   @enderror
                 </div>
 
+                <!-- Forgot password -->
+                <div class="form-floating mb-4">
+                  <p>Forgot password <a href="/forgot_password" class="text-primary">Click here!</a></p>
+                  
+                </div>
+
                 <!-- Submit button -->
                 <button type="submit" name="login" class="btn btn-success btn-lg btn-block fw-bold">Sign in</button>
               </form>

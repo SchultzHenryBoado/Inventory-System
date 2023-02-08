@@ -87,9 +87,9 @@ class UserController extends Controller
         return redirect('/user_profiles')->with('message_update', 'Updated Successfully');
     }
 
-    public function changePass($token)
+    public function changePass()
     {
-        return view('user.change_password', ['token' => $token]);
+        return view('user.change_password');
     }
 
     public function update_password(Request $request)
