@@ -34,8 +34,11 @@ class UserController extends Controller
             'password' => 'required',
         ]);
 
-        if (auth()->attempt($validated)) {
+        $remember_me = $request->has('remember_me') ? true : false;
 
+        if (auth()->attempt($validated, $remember_me)) {
+
+            auth()->user();
             $request->session()->regenerate();
 
             return redirect('/receiving');

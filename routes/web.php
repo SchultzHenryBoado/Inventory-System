@@ -48,6 +48,7 @@ Route::controller(ReceivingController::class)->group(function () {
     Route::get('/receiving', 'receive')->middleware('auth');
     Route::get('receiving/export', 'export');
     Route::get('/receiving/{receive}', 'show');
+    Route::post('/import', 'import');
 
     Route::put('/receiving/export', 'export_excel');
     Route::post('/receiving/store', 'store');

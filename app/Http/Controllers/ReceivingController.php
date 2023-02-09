@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Receiving;
 use Illuminate\Http\Request;
 use App\Exports\ReceivingExport;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use App\Imports\ReceivingImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Receiving;
 
 class ReceivingController extends Controller
 {
@@ -66,6 +65,13 @@ class ReceivingController extends Controller
 
     public function export()
     {
-        return Excel::download(new ReceivingExport, 'Receiving.xlsx');
+        return Excel::download(new ReceivingExport, 'Receiving.csv');
+    }
+
+    public function import()
+    {
+        Excel::import(new ReceivingImport, request()->file('file'));
+
+        return back()->with('success', 'Your file is imported successfully!');
     }
 }

@@ -8,11 +8,13 @@
   <title>LOGIN</title>
 
   <!-- CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <!-- <link rel="stylesheet" href="style.css"> -->
 
   <!-- JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
   </script>
 </head>
 
@@ -34,7 +36,8 @@
 
             <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
               <div class="mb-3">
-                <img src="{{ asset('img/pmi_logo.png') }}" alt="PMI Logo" class="ms-5 img-fluid" style="height: 100px; width: 380px;">
+                <img src="{{ asset('img/pmi_logo.png') }}" alt="PMI Logo" class="ms-5 img-fluid"
+                  style="height: 100px; width: 380px;">
               </div>
               <p class="h1 mb-5 text-center">User Login</p>
 
@@ -62,10 +65,15 @@
                   @enderror
                 </div>
 
+                <div class="mb-3 form-check">
+                  <input type="checkbox" name="remember_me" id="check" class="form-check-input">
+                  <label for="check" class="form-check-label">Remember me</label>
+                </div>
+
                 <!-- Forgot password -->
                 <div class="form-floating mb-4">
                   <p>Forgot password <a href="/forgot_password" class="text-primary">Click here!</a></p>
-                  
+
                 </div>
 
                 <!-- Submit button -->
