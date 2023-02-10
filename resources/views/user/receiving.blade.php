@@ -125,6 +125,14 @@
       </div>
       @endif
 
+      @if(isset($errors) && $errors->any())
+      <div class="alert alert-danger">
+        @foreach($errors->all() as $error)
+        {{$error}}
+        @endforeach
+      </div>
+      @endif()
+
       <div class="mb-3 d-inline-block">
         <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#addReceiving">Add
           Receiving</button>

@@ -2,13 +2,13 @@
 
 namespace App\Imports;
 
-use App\Models\Receiving;
+use App\Models\TransferOut;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithValidation;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ReceivingImport implements ToModel, WithHeadingRow, WithValidation
+class TransferOutImport implements ToModel, WithHeadingRow, WithValidation
 {
     /**
     * @param array $row
@@ -18,12 +18,11 @@ class ReceivingImport implements ToModel, WithHeadingRow, WithValidation
     public function model(array $row)
     {
         $user = auth()->user()->id;
-
-        return new Receiving([
-            'receiving_no' => $row['receiving_no'],
-            'warehouse' => $row['warehouse'],
+        
+        return new TransferOut([
+            'transfer_out_no' => $row['transfer_out_no'],
             'date' => $row['date'],
-            'po_number' => $row['po_number'],
+            'warehouse' => $row['warehouse'],
             'description' => $row['description'],
             'users_id' => $user
         ]);
@@ -31,11 +30,8 @@ class ReceivingImport implements ToModel, WithHeadingRow, WithValidation
 
     public function rules(): array
     {
-        return[
-            'receiving_no' => Rule::unique('receivings', 'receiving_no')
-        ];
+       return [
+        'transfer_out_no' => Rule::unique('transfer_outs', 'transfer_out_no')
+       ];
     }
-    
-    
-
 }

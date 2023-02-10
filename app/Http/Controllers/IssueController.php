@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\IssueExport;
+use App\Imports\IssueImport;
 use App\Models\Issue;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -65,6 +66,13 @@ class IssueController extends Controller
 
     public function export()
     {
-        return Excel::download(new IssueExport, 'Issue.xlsx');
+        return Excel::download(new IssueExport, 'Issue.csv');
+    }
+
+    public function import()
+    {
+        Excel::import(new IssueImport, request()->file('file'));
+
+        return back()->with('success', 'Your file is imported successfully!');
     }
 }

@@ -63,6 +63,7 @@ Route::controller(IssueController::class)->group(function () {
     Route::post('/issuance/store', 'store');
     Route::put('/issuance/{issue}', 'update');
     Route::delete('/issuance/{issue}', 'destroy');
+    Route::post('/issue/import', 'import');
 });
 
 Route::controller(TransferInController::class)->group(function () {
@@ -72,6 +73,7 @@ Route::controller(TransferInController::class)->group(function () {
     Route::post('/transfer_in/store', 'store');
     Route::put('/transfer_in/{transfer_in}', 'update');
     Route::delete('/transfer_in/{transfer_in}', 'delete');
+    Route::post('/transfer_in/import', 'import');
 });
 
 Route::controller(TransferOutController::class)->group(function () {
@@ -81,6 +83,7 @@ Route::controller(TransferOutController::class)->group(function () {
     Route::post('/transfer_out/store', 'store');
     Route::put('/transfer_out/{transfer_out}', 'update');
     Route::delete('/transfer_out/{transfer_out}', 'destroy');
+    Route::post('/transfer_out/import', 'import');  
 });
 // USERS
 

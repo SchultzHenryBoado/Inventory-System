@@ -8,12 +8,15 @@
   <title>TRANSFER IN</title>
 
   <!-- CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 
   <!-- JS -->
-  <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
   </script>
   <script src="{{ url('js/dataTable.js') }}" defer></script>
   <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" defer></script>
@@ -24,12 +27,14 @@
   <nav class="navbar navbar-expand-lg bg-success">
     <div class="container-fluid">
 
-      <button class="h-25 ms-5 btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAdmin">
+      <button class="h-25 ms-5 btn btn-success" type="button" data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasAdmin">
         <i class="fa-solid fa-bars fa-xl"></i>
       </button>
 
       <div class="btn-group me-3">
-        <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+        <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static"
+          aria-expanded="false">
           <i class="fa-solid fa-user"></i>
         </button>
         <ul class="dropdown-menu dropdown-menu-sm-end">
@@ -47,7 +52,8 @@
     </div>
   </nav>
 
-  <div class="offcanvas offcanvas-start __sidebar" data-bs-scroll="true" tabindex="-1" id="offcanvasAdmin" style="width: 300px;">
+  <div class="offcanvas offcanvas-start __sidebar" data-bs-scroll="true" tabindex="-1" id="offcanvasAdmin"
+    style="width: 300px;">
 
     <div class="offcanvas-header bg-success">
       <h5 class="offcanvas-title text-white fw-bold fs-3 text-center" id="offcanvasExampleLabel">Inventory Management
@@ -109,6 +115,20 @@
       </div>
       @endif
 
+      @if(session()->has('success'))
+      <div class="alert alert-success">
+        <p>{{session('success')}}</p>
+      </div>
+      @endif
+
+      @if(isset($errors) && $errors->any())
+      <div class="alert alert-danger">
+        @foreach($errors->all() as $error)
+        {{$error}}
+        @endforeach
+      </div>
+      @endif()
+
       <div class="mb-3 d-inline-block">
         <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#addModal">
           Add Transfer In
@@ -126,7 +146,8 @@
                   <div class="row">
                     <div class="col-12">
                       <div class="mb-3 form-floating">
-                        <input type="text" name="transfer_in_no" id="transferInNo" class="form-control" placeholder="Transfer No">
+                        <input type="text" name="transfer_in_no" id="transferInNo" class="form-control"
+                          placeholder="Transfer No">
                         <label for="transferInNo">Transfer In No</label>
                         @error('transfer_in_no')
                         <span class="text-danger">
@@ -137,7 +158,8 @@
                     </div>
                     <div class="col-12">
                       <div class="mb-3 form-floating">
-                        <input type="text" name="reference_no" id="referenceNo" class="form-control" placeholder="Reference No">
+                        <input type="text" name="reference_no" id="referenceNo" class="form-control"
+                          placeholder="Reference No">
                         <label for="referenceNo">Reference No</label>
                         @error('reference_no')
                         <span class="text-danger">
@@ -171,7 +193,8 @@
                       </div>
                       <div class="col-12">
                         <div class="mb-3 form-floating">
-                          <input type="text" name="description" id="description" class="form-control" placeholder="Description">
+                          <input type="text" name="description" id="description" class="form-control"
+                            placeholder="Description">
                           <label for="description">Description</label>
                           @error('description')
                           <span class="text-danger">
@@ -198,17 +221,34 @@
         </a>
       </div>
 
-      <!-- <div class="mb-3 d-inline-block">
+      <div class="mb-3 d-inline-block">
+        <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#importModal">
+          Import Data <i class="fa-solid fa-file-import"></i>
+        </button>
+
         <form action="/transfer_in/import" method="post" enctype="multipart/form-data">
           @csrf
-          <div class="d-inline-block">
-            <input type="file" name="file" class="form-control">
-          </div>
-          <div class="d-inline-block">
-            <input type="submit" value="Import" class="btn btn-success fw-bold">
+          <div class="modal fade" id="importModal">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Import Receiving</h5>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="file" name="file" id="importReceiving" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-success float-end fw-bold">Import</button>
+                </div>
+              </div>
+            </div>
           </div>
         </form>
-      </div> -->
+      </div>
 
       <div class="table-responsive mt-3">
         <table class="table" id="myTable" style="width: 100%;">
@@ -235,7 +275,8 @@
               <td>
                 <div class="d-inline-block">
                   <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal-$transfer_ins->id">
+                  <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                    data-bs-target="#editModal-$transfer_ins->id">
                     <i class="fa-solid fa-pen-to-square"></i>
                   </button>
 
@@ -253,7 +294,8 @@
                             <div class="row">
                               <div class="col-12">
                                 <div class="mb-3 form-floating">
-                                  <input type="text" name="transfer_in_no" id="transferNo" class="form-control" placeholder="Transfer No" value="{{ $transfer_ins->transfer_in_no }}">
+                                  <input type="text" name="transfer_in_no" id="transferNo" class="form-control"
+                                    placeholder="Transfer No" value="{{ $transfer_ins->transfer_in_no }}">
                                   <label for="transferNo">Transfer In No</label>
                                   @error('transfer_in_no')
                                   <span class="text-danger">
@@ -264,7 +306,8 @@
                               </div>
                               <div class="col-12">
                                 <div class="mb-3 form-floating">
-                                  <input type="text" name="reference_no" id="referenceNo" class="form-control" placeholder="Reference No" value="{{ $transfer_ins->reference_no }}">
+                                  <input type="text" name="reference_no" id="referenceNo" class="form-control"
+                                    placeholder="Reference No" value="{{ $transfer_ins->reference_no }}">
                                   <label for="referenceNo">Reference No</label>
                                   @error('reference_no')
                                   <span class="text-danger">
@@ -275,7 +318,8 @@
                               </div>
                               <div class="col-12">
                                 <div class="mb-3 form-floating">
-                                  <input type="date" name="date" id="date" class="form-control" placeholder="Date" value="{{ $transfer_ins->date }}">
+                                  <input type="date" name="date" id="date" class="form-control" placeholder="Date"
+                                    value="{{ $transfer_ins->date }}">
                                   <label for="date">Date</label>
                                   @error('date')
                                   <span class="text-danger">
@@ -285,7 +329,8 @@
                                 </div>
                                 <div class="col-12">
                                   <div class="mb-3 form-floating">
-                                    <select name="warehouse" id="warehouse" class="form-select" placeholder="Warehouse" value="{{ $transfer_ins->warehouse }}">
+                                    <select name="warehouse" id="warehouse" class="form-select" placeholder="Warehouse"
+                                      value="{{ $transfer_ins->warehouse }}">
                                       <option value="Warehouse">Warehouse</option>
                                     </select>
                                     <label for="warehouse">Warehouse</label>
@@ -298,7 +343,8 @@
                                 </div>
                                 <div class="col-12">
                                   <div class="mb-3 form-floating">
-                                    <input type="text" name="description" id="description" class="form-control" placeholder="Description" value="{{ $transfer_ins->description }}">
+                                    <input type="text" name="description" id="description" class="form-control"
+                                      placeholder="Description" value="{{ $transfer_ins->description }}">
                                     <label for="description">Description</label>
                                     @error('description')
                                     <span class="text-danger">
@@ -320,7 +366,8 @@
                 </div>
 
                 <div class="d-inline-block">
-                  <button type="button" class="btn btn-danger" data-bs-target="#deleteModal-{{ $transfer_ins->id }}" data-bs-toggle="modal">
+                  <button type="button" class="btn btn-danger" data-bs-target="#deleteModal-{{ $transfer_ins->id }}"
+                    data-bs-toggle="modal">
                     <i class="fa-solid fa-trash"></i>
                   </button>
 

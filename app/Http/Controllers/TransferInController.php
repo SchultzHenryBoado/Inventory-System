@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\TransferInExport;
+use App\Imports\TransferInImport;
 use App\Models\TransferIn;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -62,11 +63,13 @@ class TransferInController extends Controller
 
     public function export_excel()
     {
-        return Excel::download(new TransferInExport, 'Transfer_in.xlsx');
+        return Excel::download(new TransferInExport, 'Transfer_in.csv');
     }
 
     public function import()
     {
-        return 'hello world';
+        Excel::import(new TransferInImport, request()->file('file'));
+
+        return back()->with('success', 'Your file is imported successfully');
     }
 }

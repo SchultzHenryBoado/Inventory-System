@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\TransferOutExport;
+use App\Imports\TransferOutImport;
 use App\Models\Receiving;
 use App\Models\TransferOut;
 use Illuminate\Http\Request;
@@ -60,6 +61,13 @@ class TransferOutController extends Controller
 
     public function export()
     {
-        return Excel::download(new TransferOutExport, 'Transfer_out.xlsx');
+        return Excel::download(new TransferOutExport, 'Transfer_out.csv');
+    }
+
+    public function import() 
+    {
+        Excel::import(new TransferOutImport, request()->file('file'));
+
+        return back()->with('success', 'Your file is imported successfully!');
     }
 }
