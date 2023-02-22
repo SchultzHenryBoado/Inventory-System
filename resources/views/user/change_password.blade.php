@@ -86,7 +86,7 @@
   </div>
 
   <div class="container-fluid">
-    <div class="container mt-5">
+    <div class="container mt-5 w-50">
 
       @if(session()->has('error'))
       <div class="alert alert-danger">

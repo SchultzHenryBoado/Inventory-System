@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class IssueController extends Controller
 {
-    public function issue()
+    public function index()
     {
         $data = Issue::all();
 
@@ -38,7 +38,7 @@ class IssueController extends Controller
             'users_id' => auth()->user()->id
         ]);
 
-        return redirect('/issuance')->with('message', 'Created Successfully!');
+        return redirect('/issuance')->with('message', 'You created successfully!');
     }
 
     public function update(Request $request, Issue $issue)

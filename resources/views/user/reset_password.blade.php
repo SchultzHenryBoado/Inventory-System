@@ -24,7 +24,7 @@
   </nav>
 
   <div class="container-fluid">
-    <div class="container mt-5 w-25">
+    <div class="container mt-5 w-50">
 
       <form action="/reset_password" method="post">
         @csrf
