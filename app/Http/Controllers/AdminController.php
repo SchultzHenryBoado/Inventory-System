@@ -5,18 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Issue;
 use App\Models\Receiving;
 use App\Models\TransferOut;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
-    public function index()
-    {
-        return view('admin.index');
-    }
-
     public function dashboard()
     {
         $dataReceiving = Receiving::count();
@@ -26,28 +20,45 @@ class AdminController extends Controller
         return view('admin.dashboard', ['dataReceiving' => $dataReceiving, 'dataTransferOut' => $dataTransferOut, 'dataIssue' => $dataIssue]);
     }
 
-    public function login(Request $request)
+    public function index()
     {
-        $validated = $request->validate([
-            'email' => 'required',
-            'password' => 'required'
-        ]);
+        $data = User::all();
 
-        if (Auth::guard('admin')->attempt($validated)) {
-            $request->session()->regenerateToken();
-            return redirect('/dashboard');
-        } else {
-            return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
-        }
+        return view('admin.user', ['user' => $data]);
     }
 
-    public function logout(Request $request)
+    // Create Users
+    public function store(Request $request)
     {
-        Auth::guard('admin')->logout();
+        $validated = $request->validate([
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'email' => ['required', 'email', Rule::unique('users', 'email')],
+            'password' => 'required|confirmed|min:6',
+            'account_status' => 'required',
+            'role' => 'required'
+        ]);
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        $validated['password'] = bcrypt($validated['password']);
 
-        return redirect('/admin');
+        User::create($validated);
+
+        return redirect('/user_profiles')->with('success', 'You created successfully!');
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'email' => 'required',
+            'password' => 'required|min:6',
+            'account_status' => 'required',
+            'role' => 'required'
+        ]);
+
+        $user->update($validated);
+
+        return redirect('/user_profiles')->with('updated', 'You updated successfully!');
     }
 }

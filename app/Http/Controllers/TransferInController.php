@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class TransferInController extends Controller
 {
-    public function transferIn()
+    public function index()
     {
         $data = TransferIn::all();
 
@@ -54,7 +54,7 @@ class TransferInController extends Controller
         return redirect('/transfer_in')->with('message_update', 'Successfully Updated');
     }
 
-    public function delete(Request $request, TransferIn $transferIn)
+    public function destroy(Request $request, TransferIn $transferIn)
     {
         $transferIn->delete();
 

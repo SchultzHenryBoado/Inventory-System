@@ -11,7 +11,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class TransferOutController extends Controller
 {
-    public function transferOut()
+    public function index()
     {
         $data = TransferOut::all();
 

@@ -17,18 +17,15 @@ class UserController extends Controller
     public function index()
     {
         return view('user.index');
-    }
-
-    public function user_profiles()
+    } 
+    
+    public function forgot()
     {
-        $data = User::all();
-
-        return view('admin.user', ['user' => $data]);
+        return view('user.forgot_password');
     }
 
     public function process(Request $request)
     {
-
         $validated = $request->validate([
             'email' => ['required', 'email'],
             'password' => 'required',
@@ -38,10 +35,18 @@ class UserController extends Controller
 
         if (auth()->attempt($validated, $remember_me)) {
 
-            auth()->user();
-            $request->session()->regenerate();
+            if (auth()->user()->role === 'admin') {
+                $request->session()->regenerateToken();
 
-            return redirect('/receiving');
+                return redirect('/dashboard');
+            } else if (auth()->user()->role === 'user') {
+                $request->session()->regenerateToken();
+
+                return redirect('/receiving');
+            }
+
+        } else {
+            return back()->with('error', 'The user does not match in our records');
         }
 
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
@@ -55,39 +60,6 @@ class UserController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/user');
-    }
-
-    // Create Users
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'last_name' => 'required',
-            'first_name' => 'required',
-            'email' => ['required', 'email', Rule::unique('users', 'email')],
-            'password' => 'required|confirmed|min:6',
-            'account_status' => 'required'
-        ]);
-
-        $validated['password'] = bcrypt($validated['password']);
-
-        User::create($validated);
-
-        return redirect('/user_profiles');
-    }
-
-    public function update(Request $request, User $user)
-    {
-        $validated = $request->validate([
-            'last_name' => 'required',
-            'first_name' => 'required',
-            'email' => 'required',
-            'password' => 'required|min:6',
-            'account_status' => 'required'
-        ]);
-
-        $user->update($validated);
-
-        return redirect('/user_profiles')->with('message_update', 'Updated Successfully');
     }
 
     public function changePass()
@@ -111,11 +83,6 @@ class UserController extends Controller
         ]);
 
         return back()->with("status", "Password changed successfully!");
-    }
-
-    public function forgot()
-    {
-        return view('user.forgot_password');
     }
 
     public function submit(Request $request)

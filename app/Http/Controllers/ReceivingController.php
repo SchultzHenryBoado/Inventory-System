@@ -7,14 +7,15 @@ use App\Exports\ReceivingExport;
 use App\Imports\ReceivingImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Receiving;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
 
 class ReceivingController extends Controller
 {
-    public function receive()
+    public function index()
     {
         $data = Receiving::all();
 
-        return view('user.receiving', ['receive' => $data]);
+        return view('user.receiving', ['receiving' => $data]);
     }
 
     public function store(Request $request, Receiving $receiving)
@@ -37,30 +38,29 @@ class ReceivingController extends Controller
             'users_id' => auth()->user()->id
         ]);
 
-        return redirect('/receiving')->with('message', 'Created successfully');
+        return redirect('/receiving')->with('message', 'You created successfully!');
     }
 
     public function update(Request $request, Receiving $receiving)
     {
-
         $validated = $request->validate([
-            "receiving_no" => 'required',
+            'receiving_no' => 'required',
             'warehouse' => 'required',
-            "date" => 'required',
-            "po_number" => 'required',
-            "description" => 'required',
+            'date' => 'required',
+            'po_number' => 'required',
+            'description' => 'required',
         ]);
 
         $receiving->update($validated);
 
-        return redirect('/receiving')->with('message_update', 'Successfully Updated');
+        return back()->with('message_update', 'You updated successfully!');
     }
 
-    public function destroy(Request $request, Receiving $receiving)
+    public function destroy(Receiving $receiving)
     {
         $receiving->delete();
 
-        return redirect('/receiving')->with('message_delete', 'Successfully Deleted');
+        return back()->with('message_delete', 'You deleted successfully!');
     }
 
     public function export()
