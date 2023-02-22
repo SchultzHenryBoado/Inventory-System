@@ -71,6 +71,7 @@ Route::controller(UserController::class)->group(function () {
 
 Route::controller(ReceivingController::class)->group(function () {
   Route::get('/receiving', 'index')->middleware('auth');
+  Route::get('/receiving/export', 'export');
 
   Route::post('/receiving/store', 'store');
   Route::put('/receiving/{receiving}', 'update');
