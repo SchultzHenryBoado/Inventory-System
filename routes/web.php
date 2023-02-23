@@ -9,6 +9,7 @@ use App\Http\Controllers\TransferInController;
 use App\Http\Controllers\TransferOutController;
 use App\Http\Controllers\UserController;
 use App\Models\TransferOut;
+use App\Models\WarehouseMaster;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Row;
@@ -52,10 +53,13 @@ Route::middleware(['auth', 'admin_access'])->group(function () {
     Route::post('/stock/store', 'store');
     Route::put('/stock/{stock}', 'update');
     Route::delete('/stock/{stock}', 'destroy');
-  }); 
+  });
+
+  Route::controller(WarehouseMaster::class)->group(function() {
+    Route::get('/warehouse', 'index');
+  });
   
 });
-
 
 Route::controller(UserController::class)->group(function () {
   Route::get('/logout', 'logout');
@@ -76,6 +80,7 @@ Route::controller(ReceivingController::class)->group(function () {
   Route::post('/receiving/store', 'store');
   Route::put('/receiving/{receiving}', 'update');
   Route::delete('/receiving/{receiving}', 'destroy');
+  Route::post('/import', 'import');
 });
 
 Route::controller(IssueController::class)->group(function () {

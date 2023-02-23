@@ -41,7 +41,7 @@
     <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#addReceiving">Add
       Receiving</button>
 
-    <form action="/receiving/store" method="post">
+    <form action="/receiving/store" method="post" enctype="multipart/form-data">
       @csrf
       <div class="modal fade" id="addReceiving" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -107,6 +107,12 @@
                       {{$message}}
                     </span>
                     @enderror
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="mb-3">
+                    <label for="file" class="form-label">Import your Excel File</label>
+                    <input type="file" name="file" id="file" class="form-control">
                   </div>
                 </div>
                 <div class="modal-footer">

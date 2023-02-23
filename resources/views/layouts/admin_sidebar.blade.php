@@ -34,6 +34,9 @@
                 <li class="nav-item">
                   <a href="/stock" class="nav-link text-dark">Stock Profile</a>
                 </li>
+                <li class="nav-item">
+                  <a href="/warehouse" class="nav-link text-dark">Warehouse Master</a>
+                </li>
               </ul>
             </div>
           </div>
