@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Receiving;
+use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -12,6 +13,9 @@ class ReceivingExport implements FromCollection, WithHeadings, WithMapping
     /**
      * @return \Illuminate\Support\Collection
      */
+
+    use Exportable;
+
     public function collection()
     {
         return Receiving::all();
@@ -37,5 +41,5 @@ class ReceivingExport implements FromCollection, WithHeadings, WithMapping
             'P.O. NUMBER',
             'DESCRIPTION'
         ];
-    }   
+    }
 }
