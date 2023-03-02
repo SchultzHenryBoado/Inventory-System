@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\TransferInExport;
 use App\Imports\TransferInImport;
 use App\Models\TransferIn;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -13,8 +14,12 @@ class TransferInController extends Controller
     public function index()
     {
         $data = TransferIn::all();
+        $dataWarehouse = Warehouse::all();
 
-        return view('user.transfer_in', ['transfer_in' => $data]);
+        return view('user.transfer_in', [
+            'transfer_in' => $data,
+            'warehouse' => $dataWarehouse
+        ]);
     }
 
     public function store(Request $request)

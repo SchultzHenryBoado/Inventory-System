@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\IssueExport;
 use App\Imports\IssueImport;
 use App\Models\Issue;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -13,8 +14,12 @@ class IssueController extends Controller
     public function index()
     {
         $data = Issue::all();
+        $dataWarehouse = Warehouse::all();
 
-        return view('user.issue', ['issue' => $data]);
+        return view('user.issue', [
+            'issue' => $data,
+            'warehouse' => $dataWarehouse
+        ]);
     }
 
     public function store(Request $request)

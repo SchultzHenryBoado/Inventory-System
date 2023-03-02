@@ -6,6 +6,7 @@ use App\Exports\TransferOutExport;
 use App\Imports\TransferOutImport;
 use App\Models\Receiving;
 use App\Models\TransferOut;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -14,8 +15,12 @@ class TransferOutController extends Controller
     public function index()
     {
         $data = TransferOut::all();
+        $dataWarehouse = Warehouse::all();
 
-        return view('user.transfer_out', ['transfer_out' => $data]);
+        return view('user.transfer_out', [
+            'transfer_out' => $data,
+            'warehouse' => $dataWarehouse
+        ]);
     }
 
     public function store(Request $request)

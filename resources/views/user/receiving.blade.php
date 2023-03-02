@@ -66,7 +66,9 @@
                   <div class="mb-3 form-floating">
                     <select name="warehouse" id="warehouse" class="form-control">
                       <option disabled selected value>-- Choose a warehouse --</option>
-                      <option value="warehouse">warehouse</option>
+                      @foreach($warehouse as $rowWarehouse)
+                      <option value="{{ $rowWarehouse->warehouse_name }}">{{ $rowWarehouse->warehouse_name }}</option>
+                      @endforeach
                     </select>
                     <label for="warehouse">Warehouse</label>
                     @error('warehouse')

@@ -67,7 +67,10 @@
                   <div class="col-12">
                     <div class="form-floating mb-3">
                       <select name="warehouse" id="warehouse" class="form-select">
-                        <option value="warehouse">Warehouse</option>
+                        <option disabled selected value>-- Choose a warehouse --</option>
+                        @foreach($warehouse as $rowWarehouse)
+                        <option value="{{ $rowWarehouse->warehouse_name }}">{{ $rowWarehouse->warehouse_name }}</option>
+                        @endforeach
                       </select>
                       <label for="warehouse">Warehouse</label>
                       @error('warehouse')

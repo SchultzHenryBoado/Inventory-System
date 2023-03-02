@@ -8,6 +8,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\TransferInController;
 use App\Http\Controllers\TransferOutController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WarehouseController;
 use App\Models\TransferOut;
 use App\Models\WarehouseMaster;
 use Illuminate\Support\Facades\Auth;
@@ -55,8 +56,12 @@ Route::middleware(['auth', 'admin_access'])->group(function () {
     Route::delete('/stock/{stock}', 'destroy');
   });
 
-  Route::controller(WarehouseMaster::class)->group(function() {
+  Route::controller(WarehouseController::class)->group(function() {
     Route::get('/warehouse', 'index');
+
+    Route::post('/warehouse/store', 'store');
+    Route::put('/warehouse/{warehouse}', 'update');
+    Route::delete('/warehouse/{warehouse}', 'destroy');
   });
   
 });

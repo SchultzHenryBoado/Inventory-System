@@ -7,6 +7,7 @@ use App\Exports\ReceivingExport;
 use App\Imports\ReceivingImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Receiving;
+use App\Models\Warehouse;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
 
 class ReceivingController extends Controller
@@ -14,8 +15,12 @@ class ReceivingController extends Controller
     public function index()
     {
         $data = Receiving::all();
+        $dataWarehouse = Warehouse::all();
 
-        return view('user.receiving', ['receiving' => $data]);
+        return view('user.receiving', [
+            'receiving' => $data,
+            'warehouse' => $dataWarehouse
+        ]);
     }
 
     public function store(Request $request, Receiving $receiving)
